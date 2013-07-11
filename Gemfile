@@ -13,6 +13,7 @@ gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
+gem 'activerecord-be_readonly'
 
 # Old assets group
 gem 'sass-rails', '4.0.0'

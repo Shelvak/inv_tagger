@@ -1,0 +1,15 @@
+<%= simple_form_for(@analysis_request) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :enrolle_id %>
+    <%= f.input :product_id %>
+    <%= f.input :variety_id %>
+    <%= generated_at_picker(f) %>
+  </div>
+
+  <div class="form-actions">
+    <div class="pull-right"><%= yield :form_actions %></div>
+    <%= f.button :submit, class: 'btn-primary' %>
+  </div>
+<% end %>

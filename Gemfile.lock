@@ -27,6 +27,8 @@ GEM
       activerecord-deprecated_finders (~> 1.0.2)
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
+    activerecord-be_readonly (0.0.3)
+      activerecord
     activerecord-deprecated_finders (1.0.3)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
@@ -195,6 +197,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-be_readonly
   cancan
   capistrano
   capybara

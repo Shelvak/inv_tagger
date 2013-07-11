@@ -1,4 +1,6 @@
 InvTagger::Application.routes.draw do
+  resources :analysis_requests
+
   devise_for :users
   
   resources :users do

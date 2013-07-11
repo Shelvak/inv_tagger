@@ -1,0 +1,20 @@
+<div class="readonly-data">
+  <h2><%= @analysis_request %></h2>
+
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'enrolle_id' %></strong>:
+    <%= @analysis_request.enrolle_id %>
+  </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'product_id' %></strong>:
+    <%= @analysis_request.product_id %>
+  </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'variety_id' %></strong>:
+    <%= @analysis_request.variety_id %>
+  </p>
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_analysis_request_path(@analysis_request) if can? :update, @analysis_request %> |
+  <%= link_to t('label.list'), analysis_requests_path %>
+</div>

@@ -50,7 +50,7 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
 
   test "should update analysis_request" do
     put :update, id: @analysis_request, 
-      analysis_request: Fabricate.attributes_for(:analysis_request, attr: 'value')
+      analysis_request: { generated_at: 1.day.from_now }
     assert_redirected_to analysis_request_url(assigns(:analysis_request))
   end
 
@@ -59,6 +59,6 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
       delete :destroy, id: @analysis_request
     end
 
-    assert_redirected_to analysis_requests_path
+    assert_redirected_to analysis_requests_url
   end
 end

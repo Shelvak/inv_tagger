@@ -7,11 +7,19 @@
     
   activerecord:
     models:
+      analysis_request:
+        one: 'Solicitud para Análisis'
+        other: 'Solicitudes para Análisis'
       user:
         one: 'Usuario'
         other: 'Usuarios'
       
     attributes:
+      analysis_request:
+        enrolle: 'Exportador'
+        product: 'Producto'
+        variety: 'Variedad'
+        generated_at: 'Fecha'
       user:
         name: 'Nombre'
         lastname: 'Apellido'
@@ -42,6 +50,7 @@
   menu:
     actions:
       logout: 'Salir de la aplicación'
+    analysis_requests: 'Análisis'
     users: 'Usuarios'
     
   messages:
@@ -54,6 +63,14 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    analysis_requests:
+      index_title: 'Listado de solicitudes de análisis'
+      show_title: 'Detalle de solicitud de análisis'
+      new_title: 'Nueva solicitud de análisis'
+      correctly_created: 'Solicitud de análisis agregada correctamente.'
+      empty_index:
+        html: 'No se ha creado ninguna solicitud hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva solicitud de análisis</span>'
+      new: 'Nueva solicitud de análisis'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

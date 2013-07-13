@@ -1,5 +1,6 @@
 Fabricator(:analysis_request) do
-  enrolle_id { 0 }
-  product_id { 0 }
-  variety_id { 0 }
+  enrolle         { 0 }
+  product         { 0 }
+  variety         { 0 }
+  generated_at    { rand(9).days.ago }
 end

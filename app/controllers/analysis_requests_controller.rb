@@ -66,7 +66,7 @@ class AnalysisRequestsController < ApplicationController
 
   def analysis_request_params
     params.require(:analysis_request).permit(
-      :enrolle_id, :product_id, :variety_id, :generated_at
+      :enrolle, :product, :variety, :generated_at
     )
   end
 end

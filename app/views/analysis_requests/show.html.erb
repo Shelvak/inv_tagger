@@ -1,16 +1,12 @@
 <div class="readonly-data">
-  <h2><%= @analysis_request %></h2>
+  <h2><%= t('view.analysis_requests.show_title', owner: @analysis_request.to_s) %></h2>
 
   <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'enrolle' %></strong>:
-    <%= @analysis_request.enrolle %>
-  </p>
-  <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'product' %></strong>:
+    <strong><%= AnalysisRequest.human_attribute_name 'product_code' %></strong>:
     <%= @analysis_request.product %>
   </p>
   <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'variety' %></strong>:
+    <strong><%= AnalysisRequest.human_attribute_name 'variety_code' %></strong>:
     <%= @analysis_request.variety %>
   </p>
 </div>

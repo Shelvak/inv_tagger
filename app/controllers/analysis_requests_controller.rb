@@ -8,8 +8,8 @@ class AnalysisRequestsController < ApplicationController
 
   # GET /analysis_requests/1
   def show
-    @title = t('view.analysis_requests.show_title')
     @analysis_request = AnalysisRequest.find(params[:id])
+    @title = t('view.analysis_requests.show_title', owner: @analysis_request.to_s)
   end
 
   # GET /analysis_requests/new
@@ -36,7 +36,7 @@ class AnalysisRequestsController < ApplicationController
 
   def analysis_request_params
     params.require(:analysis_request).permit(
-      :enrolle_code, :product_code, :variety_code, :generated_at
+      :related_enrolle, :related_product, :related_variety, :generated_at
     )
   end
 end

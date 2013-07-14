@@ -5,4 +5,14 @@ class InvCommunicationsController < ApplicationController
   def enrolle
     respond_with InvEnrolle.filtered_list(params[:q]).limit(5)
   end
+
+  # Get product by autocomplete
+  def product
+    respond_with InvProduct.filtered_list(params[:q]).limit(5)
+  end
+
+  # Get variety by autocomplete
+  def variety
+    respond_with InvVariety.filtered_list(params[:q]).limit(5)
+  end
 end

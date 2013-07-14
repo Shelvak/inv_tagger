@@ -1,6 +1,8 @@
 InvTagger::Application.routes.draw do
 
-  get '/inv_communications/enrolle' => 'inv_communications#enrolle'
+  ['enrolle', 'product', 'variety'].each do |inv|
+    get "/inv_communications/#{inv}" => "inv_communications##{inv}"
+  end
 
   resources :analysis_requests, only: [:index, :show, :new, :create]
 

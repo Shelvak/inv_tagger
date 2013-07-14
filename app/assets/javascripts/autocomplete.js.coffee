@@ -26,13 +26,9 @@ jQuery ($)->
       select: (event, ui)->
         selected = ui.item
 
-        input.val(selected.value)
+        input.val(Helpers.removeLastWhiteCharacter(selected.value))
         input.data('item', selected.item)
         $(input.data('autocompleteIdTarget')).val(selected.item.id)
-
-        if (target = input.data('autocompleteLabelTarget')).length
-          beautyLabel = Helpers.removeLastWhiteCharacter(selected.item.label)
-          $(target).val(beautyLabel)
 
         input.trigger 'autocomplete:update', input
 

@@ -65,7 +65,7 @@ es:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
     analysis_requests:
       index_title: 'Listado de solicitudes de análisis'
-      show_title: 'Detalle de solicitud de análisis'
+      show_title: 'Solicitud de análisis para %{owner}'
       new_title: 'Nueva solicitud de análisis'
       correctly_created: 'Solicitud de análisis agregada correctamente.'
       empty_index:

@@ -1,8 +1,8 @@
 @Helpers=
-  removeLastWhiteCharacter: (string) ->
-    if string[string.length - 1] == ' '
-      @.removeLastWhiteCharacter(string.slice(0, -1))
+  removeLastWhiteCharacter: (element) ->
+    if element[element.length - 1] == ' '
+      @.removeLastWhiteCharacter(element.slice(0, -1))
     else
-      string
+      element
 
 

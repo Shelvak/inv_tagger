@@ -1,6 +1,6 @@
 Fabricator(:analysis_request) do
-  enrolle_code    { '[A12345] The Crazy Man'  }
-  product_code    { 0 }
-  variety_code    { 0 }
+  related_enrolle    { "[A#{rand(999)}] #{Faker::Name.name}"  }
+  related_product    { "[#{rand(999)}] #{Faker::Name.name}" }
+  related_variety    { "[#{rand(999)}] #{Faker::Name.name}" }
   generated_at    { rand(9).days.ago }
 end

@@ -12,15 +12,15 @@ class AnalysisRequestTest < ActiveSupport::TestCase
   end
 
   test 'validates blank attributes' do
-    @analysis_request.enrolle = ''
-    @analysis_request.product = ''
-    @analysis_request.variety = ''
+    @analysis_request.enrolle_code = ''
+    @analysis_request.product_code = ''
+    @analysis_request.variety_code = ''
     @analysis_request.generated_at = ''
     
     assert @analysis_request.invalid?
     assert_equal 4, @analysis_request.errors.size
 
-    [:enrolle, :product, :variety, :generated_at].each do |attr|
+    [:enrolle_code, :product_code, :variety_code, :generated_at].each do |attr|
       assert_error_message(@analysis_request, attr)
     end
   end

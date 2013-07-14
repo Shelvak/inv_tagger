@@ -14,9 +14,9 @@
 ActiveRecord::Schema.define(version: 20130711072721) do
 
   create_table "analysis_requests", force: true do |t|
-    t.string   "enrolle",      limit: 7, null: false
-    t.integer  "product",                null: false
-    t.integer  "variety",                null: false
+    t.string   "enrolle_code", limit: 7, null: false
+    t.integer  "product_code",           null: false
+    t.integer  "variety_code",           null: false
     t.date     "generated_at",           null: false
     t.datetime "created_at"
     t.datetime "updated_at"

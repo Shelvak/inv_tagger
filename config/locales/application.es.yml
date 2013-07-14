@@ -1,10 +1,10 @@
-'es':
+es:
   app_name: 'InvTagger'
-  
+
   attributes:
     created_at: 'Creación'
     updated_at: 'Actualización'
-    
+
   activerecord:
     models:
       analysis_request:
@@ -13,12 +13,12 @@
       user:
         one: 'Usuario'
         other: 'Usuarios'
-      
+
     attributes:
       analysis_request:
-        enrolle: 'Exportador'
-        product: 'Producto'
-        variety: 'Variedad'
+        enrolle_code: 'Exportador'
+        product_code: 'Producto'
+        variety_code: 'Variedad'
         generated_at: 'Fecha'
       user:
         name: 'Nombre'
@@ -30,11 +30,11 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
-        
+
   errors:
     title: 'Error'
     access_denied: 'No tiene permisos para acceder al contenido'
-        
+
   label:
     'yes': 'Si'
     'no': 'No'
@@ -46,16 +46,16 @@
     new: 'Nuevo'
     search: 'Buscar'
     show: 'Ver'
-    
+
   menu:
     actions:
       logout: 'Salir de la aplicación'
     analysis_requests: 'Análisis'
     users: 'Usuarios'
-    
+
   messages:
     confirmation: '¿Está seguro?'
-    
+
   view:
     generic:
       empty_index:

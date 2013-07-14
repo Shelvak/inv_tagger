@@ -1,5 +1,8 @@
 InvTagger::Application.routes.draw do
-  resources :analysis_requests
+
+  get '/inv_communications/enrolle' => 'inv_communications#enrolle'
+
+  resources :analysis_requests, only: [:index, :show, :new, :create]
 
   devise_for :users
   

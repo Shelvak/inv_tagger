@@ -2,9 +2,17 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :enrolle %>
-    <%= f.input :product %>
-    <%= f.input :variety %>
+    <%= f.input :enrolle_code, input_html: {
+      class: 'autocomplete-field',
+      value: f.object.enrolle, autofocus: true,
+      autocomplete: 'off',
+      data: {
+        'autocomplete-label-target' => "#analysis_request_enrolle_code",
+        'autocomplete-url' => inv_communications_enrolle_path(format: :json)
+      }
+    } %>
+    <%= f.input :product_code %>
+    <%= f.input :variety_code %>
     <%= generated_at_picker(f) %>
   </div>
 

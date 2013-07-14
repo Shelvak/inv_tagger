@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require jquery-customs/jquery.ui.datepicker-es
 //= require jquery-customs/jquery-ui-timepicker-addon
+//= require autocomplete
 //= require twitter/bootstrap
 //= require inspector
 //= require turboevents
@@ -22,5 +23,6 @@
 //= require common
 //= require date_pickers
 //= require endless_pagination
+//= require helpers
 //= require mobile
 //= require users

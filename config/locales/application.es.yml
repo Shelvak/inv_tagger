@@ -21,6 +21,8 @@ es:
         variety_code: 'Variedad'
         generated_at: 'Fecha'
         quantity: 'Cant.'
+        destiny_code: 'País de Destino'
+        harvest: 'Cosecha'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

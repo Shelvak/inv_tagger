@@ -20,6 +20,7 @@ es:
         product_code: 'Producto'
         variety_code: 'Variedad'
         generated_at: 'Fecha'
+        quantity: 'Cant.'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

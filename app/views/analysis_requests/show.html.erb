@@ -9,6 +9,10 @@
     <strong><%= AnalysisRequest.human_attribute_name 'variety_code' %></strong>:
     <%= @analysis_request.variety %>
   </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'quantity' %></strong>:
+    <%= @analysis_request.quantity %>
+  </p>
 </div>
 <div class="form-actions">
   <%= link_to t('label.list'), analysis_requests_path %>

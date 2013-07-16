@@ -1,8 +1,8 @@
 class AnalysisRequest < ActiveRecord::Base
   has_paper_trail
 
-  validates :related_enrolle, :related_product, :related_variety, :generated_at, 
-    presence: true
+  validates :related_enrolle, :related_product, :related_variety, :generated_at,
+    :quantity, presence: true
 
   attr_accessor :related_enrolle, :related_product, :related_variety
 

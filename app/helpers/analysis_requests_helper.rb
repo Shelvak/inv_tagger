@@ -8,8 +8,8 @@ module AnalysisRequestsHelper
 
   def enrolle_code_input(f)
     autocomplete_field_input(
-      f, :related_product, value: f.object.product,
-      path: inv_communications_product_path(format: :json)
+      f, :related_enrolle, value: f.object.enrolle,
+      path: inv_communications_enrolle_path(format: :json)
     )
   end
 

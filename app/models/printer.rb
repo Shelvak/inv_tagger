@@ -53,43 +53,43 @@ class Printer < ActiveRecord::Base
         # Titulo de razón
         duplicate_gilada([
           { content: 'Firma o Razón Social: ', align: :left, colspan: 6,
-            borders: [:left, :bottom, :right] }
+            borders: [:left, :bottom, :right], height: 20, size: 10 }
         ]),
 
         # Razon del solicitante
         duplicate_gilada([
-          { content: 'Vieja', align: :center, colspan: 6, borders: [:left, :bottom, :right] }
+          { content: 'Vieja', align: :center, colspan: 6, borders: [:left, :bottom, :right], height: 20, size: 10 }
         ]),
 
         # Inscripcion + código solicitante
         duplicate_gilada([
-          { content: 'Inscripción I.N.V.:', align: :left, colspan: 2, borders: [:left, :bottom] },
-          { content: 'Vieja', align: :left, colspan: 4, borders: [:bottom, :right] }
+          { content: 'Inscripción I.N.V.:', align: :left, colspan: 2, borders: [:left, :bottom], height: 20, size: 10 },
+          { content: 'Vieja', align: :left, colspan: 4, borders: [:bottom, :right], height: 20, size: 10 }
         ]),
 
         # Producto
         duplicate_gilada([
-          { content: 'Producto :', align: :left, borders: [:left, :bottom] },
-          { content: 'TITULO PRODUCTO', align: :left, colspan: 5, borders: [:bottom, :right] }
+          { content: 'Producto :', align: :left, borders: [:left, :bottom], height: 20, size: 10 },
+          { content: 'TITULO PRODUCTO', align: :left, colspan: 5, borders: [:bottom, :right], height: 20, size: 10 }
         ]),
 
         # Variedad + Año
         duplicate_gilada([
-          { content: 'VARIEDAD', align: :center, colspan: 2, borders: [:left, :bottom] },
-          { content: 'AÑO', align: :left, colspan: 4, borders: [:bottom, :right] }
+          { content: 'VARIEDAD', align: :center, colspan: 2, borders: [:left, :bottom], height: 20, size: 10 },
+          { content: 'AÑO', align: :left, colspan: 4, borders: [:bottom, :right], height: 20, size: 10 }
         ]),
 
         # Cantidad litros
         duplicate_gilada([
-          { content: 'Cantidad :' , borders: [:left, :bottom] },
-          { content: 'Nº litros', align: :right, borders: [:bottom] },
-          { content: 'LTS.', align: :left, colspan: 4, borders: [:bottom, :right] }
+          { content: 'Cantidad :' , borders: [:left, :bottom], height: 20, size: 10 },
+          { content: 'Nº litros', align: :right, borders: [:bottom], height: 20, size: 10 },
+          { content: 'LTS.', align: :left, colspan: 4, borders: [:bottom, :right], height: 20, size: 10 }
         ]),
 
         # Observaciones
         duplicate_gilada([
           { content: 'Observaciones: ', align: :left, colspan: 6, 
-            borders: [:left, :bottom, :right] }
+            borders: [:left, :bottom, :right], height: 20, size: 10 }
         ]),
 
         # triple espacio
@@ -99,22 +99,18 @@ class Printer < ActiveRecord::Base
 
         # Firma
         duplicate_gilada([
-          { content: 'Firma Poseedor o Responsable', align: :center, colspan: 6 }
+          { content: 'Firma Poseedor o Responsable', align: :center, colspan: 6, height: 17, size: 8 }
         ])
       ]
-      var = [
-        { content: '', align: :a, colspan: 7  }
-      ]
-
-      p tabla
 
       tabla_con_opciones = [ 
         tabla, 
         column_widths: [64, 44, 44, 29, 29, 29, 8, 64, 44, 29, 29, 29 ], 
-        cell_style: { inline_format: true }
+        cell_style: { inline_format: true, padding: 2 }
       ]
 
       pdf.table *tabla_con_opciones
+      pdf.move_down 8
       pdf.table *tabla_con_opciones
     end
   end

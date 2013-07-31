@@ -15,6 +15,8 @@ gem 'sidekiq'
 gem 'capistrano'
 gem 'activerecord-be_readonly'
 
+gem "prawn", "~> 1.0.0.rc2"
+
 # Old assets group
 gem 'sass-rails', '4.0.0'
 gem 'coffee-rails'

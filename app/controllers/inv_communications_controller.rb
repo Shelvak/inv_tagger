@@ -15,4 +15,9 @@ class InvCommunicationsController < ApplicationController
   def variety
     respond_with InvVariety.filtered_list(params[:q]).limit(5)
   end
+
+  # Get destiny by autocomplete
+  def destiny
+    respond_with InvDestiny.filtered_list(params[:q]).limit(5)
+  end
 end

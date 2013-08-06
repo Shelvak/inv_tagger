@@ -1,6 +1,6 @@
 InvTagger::Application.routes.draw do
 
-  ['enrolle', 'product', 'variety'].each do |inv|
+  ['destiny', 'enrolle', 'product', 'variety'].each do |inv|
     get "/inv_communications/#{inv}" => "inv_communications##{inv}"
   end
 

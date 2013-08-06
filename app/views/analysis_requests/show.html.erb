@@ -2,16 +2,28 @@
   <h2><%= t('view.analysis_requests.show_title', owner: @analysis_request.to_s) %></h2>
 
   <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'product_code' %></strong>:
+    <strong><%= AnalysisRequest.human_attribute_name 'product_code' %>:</strong>
     <%= @analysis_request.product %>
   </p>
   <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'variety_code' %></strong>:
-    <%= @analysis_request.variety %>
+    <strong><%= AnalysisRequest.human_attribute_name 'harvest' %>:</strong>
+    <%= @analysis_request.harvest %>
   </p>
   <p>
-    <strong><%= AnalysisRequest.human_attribute_name 'quantity' %></strong>:
-    <%= @analysis_request.quantity %>
+    <strong><%= AnalysisRequest.human_attribute_name 'variety_code' %>:</strong>
+    <%= [@analysis_request.variety, @analysis_request.harvest].join(' - ') %>
+  </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'quantity' %>:</strong>
+    <%= @analysis_request.quantity %> L
+  </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'destiny_code' %>:</strong>
+    <%= @analysis_request.destiny %>
+  </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'generated_at' %>:</strong>
+    <%= l @analysis_request.generated_at, format: :detailed %>
   </p>
 </div>
 <div class="form-actions">

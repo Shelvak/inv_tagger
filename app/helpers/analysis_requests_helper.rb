@@ -2,7 +2,7 @@ module AnalysisRequestsHelper
   def generated_at_picker(form)
     form.input :generated_at, as: :date_picker, input_html: { 
       value: l(form.object.try(:generated_at) || Date.today),
-      class: 'span12'
+      class: 'span9'
     }
   end
 
@@ -24,6 +24,13 @@ module AnalysisRequestsHelper
     autocomplete_field_input(
       f, :related_variety, value: f.object.variety,
       path: inv_communications_variety_path(format: :json)
+    )
+  end
+
+  def destiny_code_input(f)
+    autocomplete_field_input(
+      f, :related_destiny, value: f.object.destiny,
+      path: inv_communications_destiny_path(format: :json)
     )
   end
 end

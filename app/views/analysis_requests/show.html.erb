@@ -25,6 +25,13 @@
     <strong><%= AnalysisRequest.human_attribute_name 'generated_at' %>:</strong>
     <%= l @analysis_request.generated_at, format: :detailed %>
   </p>
+  <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'observations' %>:</strong>
+    <%= content_tag(
+      :div, simple_format(@analysis_request.observations), class: 'well'
+    ) %>
+  </p>
+
 </div>
 <div class="form-actions">
   <%= link_to t('label.list'), analysis_requests_path %>

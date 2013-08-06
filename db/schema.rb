@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130716071442) do
+ActiveRecord::Schema.define(version: 20130806190904) do
 
   create_table "analysis_requests", force: true do |t|
     t.string   "enrolle_code", limit: 7, null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130716071442) do
     t.integer  "quantity",               null: false
     t.integer  "harvest",                null: false
     t.integer  "destiny_code",           null: false
+    t.text     "observations"
   end
 
   create_table "users", force: true do |t|

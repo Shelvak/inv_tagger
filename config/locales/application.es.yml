@@ -23,6 +23,7 @@ es:
         quantity: 'Cant.'
         destiny_code: 'País de Destino'
         harvest: 'Cosecha'
+        observations: 'Observaciones'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

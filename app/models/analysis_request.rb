@@ -13,7 +13,6 @@ class AnalysisRequest < ActiveRecord::Base
   belongs_to :destiny, class_name: InvDestiny, foreign_key: 'destiny_code'
 
   before_save :assign_only_the_codes
-  #after_create :generate_cardboard
 
   def to_s
     self.enrolle
@@ -39,5 +38,9 @@ class AnalysisRequest < ActiveRecord::Base
 
   def generate_cardboard
     Printer.generate_cardboard(self)
+  end
+
+  def file_path
+    Rails.root.join('tmp', 'to_print', "#{self.try(:id)}.pdf").to_s
   end
 end

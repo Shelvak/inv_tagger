@@ -1,7 +1,7 @@
 class Printer < ActiveRecord::Base
 
   def self.generate_cardboard(analysis)
-    Prawn::Document.generate("#{analysis.id}.pdf", margin: 22) do |pdf|
+    Prawn::Document.generate(analysis.file_path, margin: 22) do |pdf|
       date = analysis.generated_at
 
       blanquito =  [ { content: nil, colspan: 6, borders: [:right, :left] } ]

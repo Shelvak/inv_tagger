@@ -1,4 +1,5 @@
 class AnalysisRequestsController < ApplicationController
+  before_filter :get_analysis_request, only: [:show, :download_cardboard]
   
   # GET /analysis_requests
   def index
@@ -8,7 +9,6 @@ class AnalysisRequestsController < ApplicationController
 
   # GET /analysis_requests/1
   def show
-    @analysis_request = AnalysisRequest.find(params[:id])
     @title = t('view.analysis_requests.show_title', owner: @analysis_request.to_s)
   end
 
@@ -32,7 +32,26 @@ class AnalysisRequestsController < ApplicationController
     end
   end
 
+  # GET /analysis_requests/1/download_cardboard
+  def download_cardboard
+    @analysis_request.generate_cardboard
+
+    file = File.open(
+      Rails.root.join('tmp', 'to_print', "#{@analysis_request.id}.pdf")
+    )
+    mime_type = Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
+                                                                                
+    response.headers['Last-Modified'] = File.mtime(file).httpdate
+    response.headers['Cache-Control'] = 'private, no-store'
+
+    send_file file, type: (mime_type || 'application/octet-stream')
+  end
+
   private
+
+  def get_analysis_request
+    @analysis_request = AnalysisRequest.find(params[:id])
+  end
 
   def analysis_request_params
     params.require(:analysis_request).permit(

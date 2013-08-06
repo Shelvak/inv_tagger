@@ -37,4 +37,14 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template "analysis_requests/show"
   end
+
+  test 'should download cardboard of analysis' do
+    analysis = Fabricate(:analysis_request)
+    get :download_cardboard, id: analysis.id
+    assert_response :success
+    assert_equal(
+     File.open(analysis.reload.file_path, encoding: 'ASCII-8BIT').read,
+     @response.body
+    )
+  end
 end

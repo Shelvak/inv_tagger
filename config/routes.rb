@@ -4,7 +4,7 @@ InvTagger::Application.routes.draw do
     get "/inv_communications/#{inv}" => "inv_communications##{inv}"
   end
 
-  resources :analysis_requests, only: [:index, :show, :new, :create] do
+  resources :analysis_requests do
     get :download_cardboard, on: :member
   end
 

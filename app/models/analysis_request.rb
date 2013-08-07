@@ -1,8 +1,11 @@
 class AnalysisRequest < ActiveRecord::Base
   has_paper_trail
 
-  validates :related_enrolle, :related_product, :related_variety, :generated_at,
-    :quantity, :related_destiny, :harvest, presence: true
+  validates :generated_at, :quantity, :harvest, presence: true
+
+  ['enrolle', 'product', 'variety', 'destiny'].each do |t|
+    validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
+  end
 
   attr_accessor :related_enrolle, :related_product, :related_variety, 
     :related_destiny
@@ -19,19 +22,19 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def assign_only_the_codes
-    if enrol_code = self.related_enrolle.match(/\[(.+)\]/)
+    if !self.enrolle_code && (enrol_code = self.related_enrolle.match(/\[(.+)\]/))
       self.enrolle_code = enrol_code[1]
     end
 
-    if prod_code = self.related_product.match(/\[(\d+)\]/)
+    if !self.product_code && (prod_code = self.related_product.match(/\[(\d+)\]/))
       self.product_code = prod_code[1]
     end
 
-    if var_code = self.related_variety.match(/\[(\d+)\]/)
+    if !self.variety_code && (var_code = self.related_variety.match(/\[(\d+)\]/))
       self.variety_code = var_code[1]
     end
 
-    if dest_code = self.related_destiny.match(/\[(\d+)\]/)
+    if !self.destiny_code && (dest_code = self.related_destiny.match(/\[(\d+)\]/))
       self.destiny_code = dest_code[1]
     end
   end
@@ -42,5 +45,20 @@ class AnalysisRequest < ActiveRecord::Base
 
   def file_path
     Rails.root.join('tmp', 'to_print', "#{self.try(:id)}.pdf").to_s
+  end
+
+  def deleted?
+    self.deleted_at.present?
+  end
+
+  ['enrolle', 'product', 'variety', 'destiny'].each do |t|
+    define_method("#{t}_blank?") do
+      self.send("#{t}_code").blank? && self.send("related_#{t}").blank?
+    end
+  end
+
+  def destroy
+    self.deleted_at = Time.zone.now
+    self.save!
   end
 end

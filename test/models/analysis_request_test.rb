@@ -15,10 +15,14 @@ class AnalysisRequestTest < ActiveSupport::TestCase
     @analysis_request.related_enrolle = ''
     @analysis_request.related_product = ''
     @analysis_request.related_variety = ''
+    @analysis_request.related_destiny = ''
+    @analysis_request.enrolle_code = ''
+    @analysis_request.product_code = ''
+    @analysis_request.variety_code = ''
+    @analysis_request.destiny_code = ''
     @analysis_request.generated_at = ''
     @analysis_request.quantity = ''
     @analysis_request.harvest = ''
-    @analysis_request.related_destiny = ''
     
     assert @analysis_request.invalid?
     assert_equal 7, @analysis_request.errors.size

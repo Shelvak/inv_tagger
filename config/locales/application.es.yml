@@ -71,7 +71,12 @@ es:
       index_title: 'Listado de solicitudes de análisis'
       show_title: 'Solicitud de análisis para %{owner}'
       new_title: 'Nueva solicitud de análisis'
+      edit_title: 'Modificando - Solicitud de análisis'
       correctly_created: 'Solicitud de análisis agregada correctamente.'
+      correctly_updated: 'Solicitud de análisis actualizada correctamente.'
+      correctly_destroyed: 'Solicitud de análisis eliminada.'
+      stale_object_error: 'La solicitud no pudo ser actualizada, intente nuevamente.'
+      can_not_edit: 'La solicitud no se puede modificar.'
       empty_index:
         html: 'No se ha creado ninguna solicitud hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva solicitud de análisis</span>'
       new: 'Nueva solicitud de análisis'

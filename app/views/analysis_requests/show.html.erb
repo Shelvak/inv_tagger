@@ -13,7 +13,7 @@
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'variety_code' %>:</strong>
-        <%= [@analysis_request.variety, @analysis_request.harvest].join(' - ') %>
+        <%= @analysis_request.variety %>
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'quantity' %>:</strong>
@@ -46,5 +46,8 @@
 
 </div>
 <div class="form-actions">
+  <% unless @analysis_request.deleted? %>
+    <%= link_to t('label.edit'), edit_analysis_request_path(@analysis_request) %> |
+  <% end %>
   <%= link_to t('label.list'), analysis_requests_path %>
 </div>

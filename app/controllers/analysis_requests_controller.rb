@@ -1,10 +1,10 @@
 class AnalysisRequestsController < ApplicationController
-  before_filter :get_analysis_request, only: [:show, :download_cardboard]
+  before_filter :get_analysis_request, except: [:index, :new, :create]
   
   # GET /analysis_requests
   def index
     @title = t('view.analysis_requests.index_title')
-    @analysis_requests = AnalysisRequest.page(params[:page])
+    @analysis_requests = AnalysisRequest.order(:id).page(params[:page])
   end
 
   # GET /analysis_requests/1
@@ -47,7 +47,45 @@ class AnalysisRequestsController < ApplicationController
     send_file file, type: (mime_type || 'application/octet-stream')
   end
 
+  # GET /analysis_requests/1/edit
+  def edit
+    @title = t('view.analysis_requests.edit_title')
+    if @analysis_request.deleted? 
+      redirect_to analysis_requests_url, notice: t('view.analysis_requests.can_not_edit')
+    end
+  end
+
+  # PUT /analysis_requests/1
+  def update
+    @title = t('view.analysis_requests.edit_title')
+
+    respond_to do |format|
+      if @analysis_request.update(analysis_request_params)
+        format.html { redirect_to @analysis_request, notice: t('view.analysis_requests.correctly_updated') }
+      else
+        format.html { render action: 'edit' }
+      end
+    end
+  rescue ActiveRecord::StaleObjectError
+    redirect_to edit_analysis_request_url(@analysis_request), alert: t('view.analysis_requests.stale_object_error')
+  end
+
+  # DELETE /analysis_requests/1
+  def destroy
+    if @analysis_request.destroy
+      redirect_to analysis_requests_url, notice: t('view.analysis_requests.correctly_destroyed')
+    else
+      redirect_to_index_with_stale_error
+    end
+  rescue ActiveRecord::StaleObjectError
+    redirect_to_index_with_stale_error
+  end
+
   private
+
+  def redirect_to_index_with_stale_error
+    redirect_to analysis_requests_url, alert: t('view.analysis_requests.stale_object_error')
+  end
 
   def get_analysis_request
     @analysis_request = AnalysisRequest.find(params[:id])

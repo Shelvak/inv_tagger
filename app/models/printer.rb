@@ -15,7 +15,7 @@ class Printer < ActiveRecord::Base
 
         # Representantes
         duplicate_gilada([
-          { content: "Representantes de Bodegas \n Rioja 363 - Ciudad", align: :center, colspan: 3, 
+          { content: "Representantes de Bodegas \n Rioja 360 - Ciudad", align: :center, colspan: 3, 
             size: 7, borders: [:left] },
           { content: nil, colspan: 3, borders: [:right] }
         ]),
@@ -81,7 +81,7 @@ class Printer < ActiveRecord::Base
 
         # Variedad + Año
         duplicate_gilada([
-          { content: chomp_white_spaces(analysis.variety.design), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
+          { content: chomp_white_spaces(analysis.try(:variety).try(:design)), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
           { content: analysis.harvest.to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
         ]),
 
@@ -118,6 +118,12 @@ class Printer < ActiveRecord::Base
       pdf.table *tabla_con_opciones
       pdf.move_down 8
       pdf.table *tabla_con_opciones
+    end
+  end
+
+  def self.generate_form(analysis)
+    Prawn::Document.generate("analysis.file_path.pdf", margin: 22, page_layout: :landscape, page_size: 'A4') do |pdf|
+      pdf.text "ROCK rock rock rock rock rock rock rock rock rock rock rock rock rock rock rock rock rock rock                  "
     end
   end
 

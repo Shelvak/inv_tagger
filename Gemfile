@@ -4,8 +4,8 @@ gem 'rails', '4.0.0'
 
 gem 'pg'
 gem 'will_paginate'
-gem 'simple_form', '~> 3.0.0.rc'
-gem 'devise', '~> 3.0.0.rc'
+gem 'simple_form'
+gem 'devise'
 gem 'cancan'
 gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
@@ -18,7 +18,7 @@ gem 'activerecord-be_readonly'
 gem "prawn", "~> 1.0.0.rc2"
 
 # Old assets group
-gem 'sass-rails', '4.0.0'
+gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'

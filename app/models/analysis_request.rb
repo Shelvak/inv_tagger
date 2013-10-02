@@ -3,7 +3,7 @@ class AnalysisRequest < ActiveRecord::Base
 
   validates :generated_at, :quantity, :harvest, presence: true
 
-  ['enrolle', 'product', 'variety', 'destiny'].each do |t|
+  ['enrolle', 'product', 'destiny'].each do |t|
     validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
   end
 

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130807042718) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "analysis_requests", force: true do |t|
     t.string   "enrolle_code", limit: 7, null: false
     t.integer  "product_code",           null: false

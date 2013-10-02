@@ -26,3 +26,4 @@
 //= require helpers
 //= require mobile
 //= require users
+//= require jquery-customs/tokeninput

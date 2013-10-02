@@ -9,6 +9,9 @@ Devise.setup do |config|
   # Configure the class responsible to send e-mails.
   # config.mailer = 'DeviseBackgrounder'
 
+  # Secret Token
+  config.secret_key = '1e6c1bb95319fc27a723ce5548f937503ba169bcb7be151806d9f3dad478e16ef99cbf474e5dd67079c11ddbfa146571d6cb10dee85172e99d56b71613c9edc9'
+
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
@@ -213,5 +216,4 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
-  config.secret_key = '1e6c1bb95319fc27a723ce5548f937503ba169bcb7be151806d9f3dad478e16ef99cbf474e5dd67079c11ddbfa146571d6cb10dee85172e99d56b71613c9edc9'
 end

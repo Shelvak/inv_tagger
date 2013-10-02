@@ -5,17 +5,20 @@ gem 'rails', '4.0.0'
 gem 'pg'
 gem 'will_paginate'
 gem 'simple_form'
-gem 'devise'
-gem 'cancan'
-gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns'
 gem 'validates_timeliness'
-gem 'sidekiq'
 gem 'capistrano'
 gem 'activerecord-be_readonly'
 
 gem "prawn", "~> 1.0.0.rc2"
+
+# Auth & Mailing Gems
+gem 'devise'
+gem 'devise-async'
+gem 'cancan'
+gem 'role_model'
+gem 'sidekiq'
 
 # Old assets group
 gem 'sass-rails'

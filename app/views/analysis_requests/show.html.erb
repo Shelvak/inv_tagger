@@ -21,7 +21,7 @@
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'destiny_code' %>:</strong>
-        <%= @analysis_request.destiny %>
+        <%= @analysis_request.destinies.map(&:to_s).join(' - ' ) %>
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'generated_at' %>:</strong>

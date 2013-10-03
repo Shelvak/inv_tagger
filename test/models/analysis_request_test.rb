@@ -18,7 +18,7 @@ class AnalysisRequestTest < ActiveSupport::TestCase
     @analysis_request.related_destiny = ''
     @analysis_request.enrolle_code = ''
     @analysis_request.product_code = ''
-    @analysis_request.destiny_code = ''
+    @analysis_request.destiny_codes = ''
     @analysis_request.generated_at = ''
     @analysis_request.quantity = ''
     @analysis_request.harvest = ''
@@ -33,10 +33,27 @@ class AnalysisRequestTest < ActiveSupport::TestCase
       assert_error_message(@analysis_request, attr)
     end
   end
-    
+  
+  test 'validates correct range of attributes' do
+    @analysis_request.harvest = 1200
+    assert @analysis_request.invalid?
+    assert_equal 1, @analysis_request.errors.count
+    assert_error_message(
+      @analysis_request, :harvest, :greater_than_or_equal_to, count: 1500
+    )
+
+    @analysis_request.harvest = 2200
+    assert @analysis_request.invalid?
+    assert_equal 1, @analysis_request.errors.count
+    assert_error_message(
+      @analysis_request, :harvest, :less_than_or_equal_to, count: Date.today.year
+    )
+  end
+
   private
 
-  def assert_error_message(obj, attr, error = :blank)
-    assert_equal [error_message_from_model(obj, attr, error)], obj.errors[attr]
+  def assert_error_message(obj, attr, error = :blank, opts={})
+    assert_equal [error_message_from_model(obj, attr, error, opts)].sort,
+      obj.errors[attr].sort
   end
 end

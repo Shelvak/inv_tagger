@@ -107,8 +107,7 @@ module ApplicationHelper
     form.input column, as: :string, label: false, input_html: {
       class: "autocomplete-field #{@inputs_class}",
       value: options[:value], autofocus: true,
-      autocomplete: 'off',
-      data: {
+      autocomplete: 'off', required: options[:required], data: {
         'autocomplete-id-target' => options[:id_target],
         'autocomplete-label-target' => options[:label_target],
         'autocomplete-url' => options[:path]

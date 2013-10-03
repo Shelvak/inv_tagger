@@ -60,6 +60,9 @@ es:
   messages:
     confirmation: '¿Está seguro?'
 
+  shared:
+    no_result: 'Sin resultados'
+
   view:
     generic:
       empty_index:

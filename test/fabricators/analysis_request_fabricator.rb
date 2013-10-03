@@ -4,6 +4,6 @@ Fabricator(:analysis_request) do
   related_variety     { "[113] #{Faker::Name.name}" }
   generated_at        { rand(9).days.ago }
   quantity            { rand(999) }
-  related_destiny     { "[900] #{Faker::Address.country}" }
+  related_destiny     { "[900, 901, 902]" }
   harvest             2005
 end

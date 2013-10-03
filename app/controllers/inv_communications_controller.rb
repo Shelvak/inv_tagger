@@ -1,4 +1,5 @@
 class InvCommunicationsController < ApplicationController
+  before_filter :authenticate_user!
   respond_to :json
 
   # Get enrolle by autocomplete

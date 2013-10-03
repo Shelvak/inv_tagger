@@ -10,5 +10,19 @@ class InvDestiny < InvDbModel
     "[#{self.codpais}] #{self.nombre}"
   end
 
+  def code
+    self.codpais
+  end
+
   alias_method :label, :to_s
+  alias_method :id, :code
+
+  def as_json(options = nil)
+    default_options = {
+      only: [:id],
+      methods: [:id, :label]
+    }
+
+    super(default_options.merge(options || {}))
+  end
 end

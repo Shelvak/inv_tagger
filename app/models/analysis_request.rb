@@ -49,8 +49,8 @@ class AnalysisRequest < ActiveRecord::Base
     Printer.generate_cardboard(self)
   end
 
-  def file_path
-    Rails.root.join('tmp', 'to_print', "#{self.try(:id)}.pdf").to_s
+  def file_path(type)
+    Rails.root.join('tmp', 'to_print', "#{self.try(:id)}-#{type}.pdf").to_s
   end
 
   def deleted?

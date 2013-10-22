@@ -122,7 +122,7 @@ class Printer < ActiveRecord::Base
   end
 
   def self.generate_form(analysis)
-    Prawn::Document.generate(analysis.file_path(:form), margin: 20, page_layout: :landscape, page_size: 'A4') do |pdf|
+    Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4') do |pdf|
       #height = 25
       full_destinies = analysis.destinies
       destinies = full_destinies.map(&:codpais).map(&:to_s)
@@ -202,7 +202,7 @@ class Printer < ActiveRecord::Base
           { content: "CANTIDAD\nDE COPIAS", align: :center, size: 8 }
         ],
         [
-          { content: [chomp_white_spaces(analysis.try(:product).try(:design)), ' (O)'].join, align: :center, size: 12, height: 150, borders: [:left, :bottom] },
+          { content: [chomp_white_spaces(analysis.try(:product).try(:design)), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom] },
           { content: analysis.try(:product_code).try(:to_s), align: :center, size: 10, borders: [:bottom] },
           { content: analysis.try(:harvest).try(:to_s), align: :center, size: 10, borders: [:bottom] },
           { content: analysis.try(:quantity).try(:to_s), align: :center, size: 10, borders: [:bottom] },
@@ -249,7 +249,7 @@ class Printer < ActiveRecord::Base
 
       tabla_con_opciones = [ 
         tabla, 
-        column_widths: [160,10,40,75,70,30,100,45,52,40],
+        column_widths: [150,10,30,65,70,30,100,45,52,40],
         cell_style: { inline_format: true, padding: [0, 1, 0, 1] }
       ]
 
@@ -257,7 +257,7 @@ class Printer < ActiveRecord::Base
 
       # Do the fuck1ng MBM circle 
       pdf.stroke do
-        pdf.rounded_rectangle [676, 565], 65, 35, 18
+        pdf.rounded_rectangle [643, 533], 65, 35, 18
       end
     end
   end

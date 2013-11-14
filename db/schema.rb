@@ -11,23 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807042718) do
+ActiveRecord::Schema.define(version: 20131114153518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "analysis_requests", force: true do |t|
-    t.string   "enrolle_code",  limit: 7, null: false
-    t.integer  "product_code",            null: false
+    t.string   "enrolle_code",  limit: 7,               null: false
+    t.integer  "product_code",                          null: false
     t.integer  "variety_code"
-    t.date     "generated_at",            null: false
-    t.integer  "destiny_codes",                        array: true
+    t.date     "generated_at",                          null: false
+    t.integer  "destiny_codes",                                      array: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity",                null: false
-    t.integer  "harvest",                 null: false
+    t.integer  "quantity",                              null: false
+    t.integer  "harvest",                               null: false
     t.text     "observations"
     t.datetime "deleted_at"
+    t.string   "request_type",  limit: 1, default: "p"
   end
 
   add_index "analysis_requests", ["enrolle_code"], name: "index_analysis_requests_on_enrolle_code", using: :btree

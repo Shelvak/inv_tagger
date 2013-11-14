@@ -4,13 +4,16 @@
 
   <div class="form-inputs">
     <div class="row-fluid">
-      <div class="span5">
+      <div class="span4">
         <%= f.label :enrolle_code, required: true %>
         <%= enrolle_code_input(f) %>
       </div>
-      <div class="span5">
+      <div class="span4">
         <%= f.label :destiny_code, required: true %>
         <%= destiny_code_input(f) %>
+      </div>
+      <div class="span2">
+        <%= request_type_for_analysis_request(f) %>
       </div>
       <div class="span2">
         <%= generated_at_picker(f) %>

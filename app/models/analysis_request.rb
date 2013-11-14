@@ -1,8 +1,14 @@
 class AnalysisRequest < ActiveRecord::Base
   has_paper_trail
 
+  REQUEST_TYPES = {
+    'a' => 'affidavit',
+    'c' => 'common',
+    'p' => 'preferential'
+  }.freeze.with_indifferent_access
+
   validates :generated_at, :quantity, :harvest, presence: true
-  validates :harvest, numericality: { 
+  validates :harvest, numericality: {
     allow_blank: true, allow_nil: true,
     greater_than_or_equal_to: 1500,
     less_than_or_equal_to: ->(d) { Date.today.year }
@@ -12,7 +18,7 @@ class AnalysisRequest < ActiveRecord::Base
     validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
   end
 
-  attr_accessor :related_enrolle, :related_product, :related_variety, 
+  attr_accessor :related_enrolle, :related_product, :related_variety,
     :related_destiny
 
   belongs_to :enrolle, class_name: InvEnrolle, foreign_key: 'enrolle_code'
@@ -49,6 +55,11 @@ class AnalysisRequest < ActiveRecord::Base
     Printer.generate_cardboard(self)
   end
 
+  def generate_form
+    Printer.generate_form(self)
+  end
+
+
   def file_path(type)
     Rails.root.join('tmp', 'to_print', "#{self.try(:id)}-#{type}.pdf").to_s
   end
@@ -78,5 +89,9 @@ class AnalysisRequest < ActiveRecord::Base
 
   def destinies=(codes)
     self.destiny_codes = codes.sort
+  end
+
+  REQUEST_TYPES.each do |k, v|
+    define_method("#{v}?") { self.request_type == k }
   end
 end

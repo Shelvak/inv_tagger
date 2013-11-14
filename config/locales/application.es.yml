@@ -24,6 +24,7 @@ es:
         destiny_code: 'País de Destino'
         harvest: 'Cosecha'
         observations: 'Observaciones'
+        request_type: 'Tipo'
       user:
         name: 'Nombre'
         lastname: 'Apellido'
@@ -84,6 +85,10 @@ es:
         html: 'No se ha creado ninguna solicitud hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva solicitud de análisis</span>'
       new: 'Nueva solicitud de análisis'
       download_cardboard: 'Descargar Cartulina'
+      types:
+        affidavit: 'Declaración jurada'
+        common: 'Común'
+        preferential: 'Preferencial'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

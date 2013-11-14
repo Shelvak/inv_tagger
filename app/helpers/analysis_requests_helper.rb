@@ -1,6 +1,6 @@
 module AnalysisRequestsHelper
   def generated_at_picker(form)
-    form.input :generated_at, as: :date_picker, input_html: { 
+    form.input :generated_at, as: :date_picker, input_html: {
       value: l(form.object.try(:generated_at) || Date.today),
       class: 'span9'
     }
@@ -35,7 +35,20 @@ module AnalysisRequestsHelper
         path: inv_communications_destiny_path(format: :json),
         no_result: t('shared.no_result'),
         tokenized: false
-      } 
+      }
     }
+  end
+
+  def request_type_for_analysis_request(form)
+    selected = form.object.try(:request_type)
+
+    collection = AnalysisRequest::REQUEST_TYPES.map do |k, v|
+      selected ||= k if v == 'preferential'
+
+      [t("view.analysis_requests.types.#{v}"), k]
+    end
+
+    form.input :request_type, collection: collection,
+      selected: selected, include_blank: false, input_html: { class: 'span10' }
   end
 end

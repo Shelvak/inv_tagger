@@ -18,5 +18,5 @@ jQuery ($) ->
   # Doble iniciador por turbolinks
   Autocomplete.tokenizeInputs()
 
-  #$(document).on 'page:change', ->
-  #  Autocomplete.tokenizeInputs()
+  $(document).on 'page:change', ->
+    Autocomplete.tokenizeInputs()

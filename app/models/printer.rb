@@ -15,14 +15,14 @@ class Printer < ActiveRecord::Base
 
         # Representantes
         duplicate_gilada([
-          { content: "Representantes de Bodegas \n Rioja 360 - Ciudad", align: :center, colspan: 3, 
+          { content: "Representantes de Bodegas \n Rioja 360 - Ciudad", align: :center, colspan: 3,
             size: 7, borders: [:left] },
           { content: nil, colspan: 3, borders: [:right] }
         ]),
 
         # Blanco
         duplicate_gilada(blanquito),
-        
+
         # Inst Nac.  + Dia/Mes/Año
         duplicate_gilada([
           { content: 'INSTITUTO NACIONAL', align: :left, colspan: 3, size: 10,
@@ -40,19 +40,19 @@ class Printer < ActiveRecord::Base
           { content: "#{date.month}", align: :center, size: 10 },
           { content: "#{date.year}", align: :center, size: 10 }
         ]),
-        
+
         # Blanco
         duplicate_gilada(blanquito),
 
         # Muestra de:
         duplicate_gilada([
-          { content: 'Muestra para obtener análisis de: ', align: :left, 
+          { content: 'Muestra para obtener análisis de: ', align: :left,
             colspan: 6, borders: [:left, :bottom, :right] }
         ]),
 
-        # Tipo de 
+        # Tipo de
         duplicate_gilada([
-          { content: 'APTITUD DE EXPORTACIÓN', align: :center, colspan: 6, 
+          { content: 'APTITUD DE EXPORTACIÓN', align: :center, colspan: 6,
             borders: [:left, :bottom, :right] }
         ]),
 
@@ -94,7 +94,7 @@ class Printer < ActiveRecord::Base
 
         # Observaciones
         duplicate_gilada([
-          { content: 'Observaciones: ', align: :left, colspan: 6, 
+          { content: 'Observaciones: ', align: :left, colspan: 6,
             borders: [:left, :bottom, :right], size: 10 }
         ]),
 
@@ -109,9 +109,9 @@ class Printer < ActiveRecord::Base
         ])
       ]
 
-      tabla_con_opciones = [ 
-        tabla, 
-        column_widths: [62, 42, 41, 29, 29, 29, 8, 62, 42, 41, 29, 29], 
+      tabla_con_opciones = [
+        tabla,
+        column_widths: [62, 42, 41, 29, 29, 29, 8, 62, 42, 41, 29, 29],
         cell_style: { inline_format: true, padding: [0, 0, 0, 4], border_width: 0.2, height: 15 }
       ]
 
@@ -133,7 +133,7 @@ class Printer < ActiveRecord::Base
       tabla = [
         # Solicitud + MBM
         [
-          { content: '<u>SOLICITUD PARA ANALISIS DE APTITUD DE EXPORTACIÓN</u>', 
+          { content: '<u>SOLICITUD PARA ANALISIS DE APTITUD DE EXPORTACIÓN</u>',
             align: :center, colspan: 7, size: 17, borders: [] },
           { content: "<b>M.B.M.<b>", align: :center, colspan: 4, size: 14, borders: [] }
         ],
@@ -167,7 +167,7 @@ class Printer < ActiveRecord::Base
           { content: nil, borders: [] },
           { content: '<b>COMÚN:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: nil, border_width: 3 },
+          { content: (analysis.common? ? 'X' : nil), border_width: 3 },
           { content: nil, borders: [] }
         ],
         [
@@ -175,7 +175,7 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 2, borders: [] },
           { content: '<b>PREFERENCIAL:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: nil, border_width: 3 },
+          { content: (analysis.preferential? ? 'X' : nil), border_width: 3 },
           { content: nil, borders: [] }
         ],
         [
@@ -183,7 +183,7 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 2, borders: [] },
           { content: '<b>DECLARACIÓN JURADA:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: nil, border_width: 3 },
+          { content: (analysis.affidavit? ? 'X' : nil), border_width: 3 },
           { content: nil, borders: [] }
         ],
         blanquito,
@@ -239,7 +239,7 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 3, height: 80, borders: [] },
           { content: nil, colspan: 4, height: 80, borders: [:left, :top, :right] },
           { content: nil, colspan: 4, height: 80, borders: [] }
-        ], 
+        ],
         [
           { content: 'FIRMA SOLICITANTE Y ACLARACIÓN', align: :center, colspan: 3, size: 8, height: 20, borders: [:top] },
           { content: 'SELLO RECEPCIÓN I.N.V.', align: :center, colspan: 4, borders: [:left, :bottom, :right] },
@@ -247,15 +247,15 @@ class Printer < ActiveRecord::Base
         ]
       ]
 
-      tabla_con_opciones = [ 
-        tabla, 
+      tabla_con_opciones = [
+        tabla,
         column_widths: [150,10,30,65,70,30,100,45,52,40],
         cell_style: { inline_format: true, padding: [0, 1, 0, 1] }
       ]
 
       pdf.table *tabla_con_opciones
 
-      # Do the fuck1ng MBM circle 
+      # Do the fuck1ng MBM circle
       pdf.stroke do
         pdf.rounded_rectangle [643, 533], 65, 35, 18
       end

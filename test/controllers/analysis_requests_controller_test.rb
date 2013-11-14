@@ -43,8 +43,19 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
     get :download_cardboard, id: @analysis
     assert_response :success
     assert_equal(
-     File.open(@analysis.reload.file_path, encoding: 'ASCII-8BIT').read,
-     @response.body
+     File.open(
+       @analysis.reload.file_path(:cardboard), encoding: 'ASCII-8BIT'
+     ).read, @response.body
+    )
+  end
+
+  test 'should download form of analysis' do
+    get :download_form, id: @analysis
+    assert_response :success
+    assert_equal(
+     File.open(
+       @analysis.reload.file_path(:form), encoding: 'ASCII-8BIT'
+     ).read, @response.body
     )
   end
 
@@ -57,8 +68,7 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
   end
 
   test "should update analysis_request" do
-    put :update, id: @analysis, analysis_request:
-      {harvest: 1970}
+    put :update, id: @analysis, analysis_request: { harvest: 1970 }
     assert_redirected_to analysis_request_url(assigns(:analysis_request))
   end
 

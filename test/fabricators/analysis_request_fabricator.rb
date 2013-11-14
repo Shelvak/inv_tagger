@@ -6,4 +6,5 @@ Fabricator(:analysis_request) do
   quantity            { rand(999) }
   related_destiny     { "[900, 901, 902]" }
   harvest             2005
+  request_type        { AnalysisRequest::REQUEST_TYPES.keys.sample }
 end

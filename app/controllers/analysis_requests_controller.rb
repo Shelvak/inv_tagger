@@ -1,10 +1,10 @@
 class AnalysisRequestsController < ApplicationController
   before_filter :get_analysis_request, except: [:index, :new, :create]
   before_filter :authenticate_user!
-  
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /analysis_requests
   def index
     @title = t('view.analysis_requests.index_title')
@@ -36,25 +36,10 @@ class AnalysisRequestsController < ApplicationController
     end
   end
 
-  # GET /analysis_requests/1/download_cardboard
-  def download_cardboard
-    @analysis_request.generate_cardboard
-
-    file = File.open(
-      Rails.root.join('tmp', 'to_print', "#{@analysis_request.id}.pdf")
-    )
-    mime_type = Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
-                                                                                
-    response.headers['Last-Modified'] = File.mtime(file).httpdate
-    response.headers['Cache-Control'] = 'private, no-store'
-
-    send_file file, type: (mime_type || 'application/octet-stream')
-  end
-
   # GET /analysis_requests/1/edit
   def edit
     @title = t('view.analysis_requests.edit_title')
-    if @analysis_request.deleted? 
+    if @analysis_request.deleted?
       redirect_to analysis_requests_url, notice: t('view.analysis_requests.can_not_edit')
     end
   end
@@ -85,6 +70,34 @@ class AnalysisRequestsController < ApplicationController
     redirect_to_index_with_stale_error
   end
 
+  # GET /analysis_requests/1/download_cardboard
+  def download_cardboard
+    @analysis_request.generate_cardboard
+
+    file = File.open @analysis_request.reload.file_path(:cardboard)
+
+    mime_type = Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
+
+    response.headers['Last-Modified'] = File.mtime(file).httpdate
+    response.headers['Cache-Control'] = 'private, no-store'
+
+    send_file file, type: (mime_type || 'application/octet-stream')
+  end
+
+  # GET /analysis_requests/1/download_form
+  def download_form
+    @analysis_request.generate_form
+
+    file = File.open @analysis_request.reload.file_path(:form)
+
+    mime_type = Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
+
+    response.headers['Last-Modified'] = File.mtime(file).httpdate
+    response.headers['Cache-Control'] = 'private, no-store'
+
+    send_file file, type: (mime_type || 'application/octet-stream')
+  end
+
   private
 
   def redirect_to_index_with_stale_error
@@ -98,7 +111,7 @@ class AnalysisRequestsController < ApplicationController
   def analysis_request_params
     params.require(:analysis_request).permit(
       :related_enrolle, :related_product, :related_variety, :generated_at,
-      :quantity, :related_destiny, :harvest, :observations
+      :quantity, :related_destiny, :harvest, :observations, :request_type
     )
   end
 end

@@ -203,22 +203,22 @@ class Printer < ActiveRecord::Base
         ],
         [
           { content: [chomp_white_spaces(analysis.try(:product).try(:design)), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom] },
-          { content: analysis.try(:product_code).try(:to_s), align: :center, size: 10, borders: [:bottom] },
-          { content: analysis.try(:harvest).try(:to_s), align: :center, size: 10, borders: [:bottom] },
-          { content: analysis.try(:quantity).try(:to_s), align: :center, size: 10, borders: [:bottom] },
-          { content: chomp_white_spaces(analysis.try(:variety).try(:to_s)), align: :center, size: 10, borders: [:bottom] },
-          { content: analysis.try(:variety_code).try(:to_s), align: :center, size: 10, borders: [:bottom] },
-          { content: "3053", align: :center, size: 8, borders: [:bottom] },
-          { content: destinies.join("\n"), align: :center, size: 10, borders: [:bottom] },
-          { content: "-", align: :center, size: 7.5, borders: [:bottom] },
-          { content: "-", align: :center, size: 7.5, borders: [:bottom] },
-          { content: "-", align: :center, size: 7.5, borders: [:right, :bottom] }
+          { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
+          { content: number_with_delimiter(analysis.try(:harvest)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
+          { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
+          { content: chomp_white_spaces(analysis.try(:variety).try(:to_s)), align: :center, size: 11, borders: [:bottom] },
+          { content: analysis.try(:variety_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
+          { content: "3053", align: :center, size: 12, borders: [:bottom] },
+          { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom] },
+          { content: (analysis.special_analysis ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom] },
+          { content: (analysis.tasting ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom] },
+          { content: analysis.copies.to_s, align: :center, size: 11, borders: [:right, :bottom] }
         ],
         blanquito,
         blanquito,
         [
           { content: "<u>ANALISIS DE ORIGEN:</u>", align: :left, size: 9.5, height: 30, borders: [:top, :left] },
-          { content: analysis.source_analysis, colspan: 8, size: 7, borders: [:top] },
+          { content: analysis.source_analysis, colspan: 8, size: 8, borders: [:top] },
           { content: nil, colspan: 2, borders: [:top, :right] }
         ],
         [
@@ -268,6 +268,10 @@ class Printer < ActiveRecord::Base
       { content: nil, borders: [] },
       hashes
     ].flatten
+  end
+
+  def self.number_with_delimiter(number)
+    ActionController::Base.helpers.number_with_delimiter number
   end
 
   def self.chomp_white_spaces(string)

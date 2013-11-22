@@ -58,4 +58,24 @@ module AnalysisRequestsHelper
       path: inv_communications_enrolle_path(format: :json)
     )
   end
+
+  def special_analysis_select_for_request(form)
+    collection = [
+      [t('label.no'), false],
+      [t('label.yes'), true]
+    ]
+
+    form.input :special_analysis, collection: collection, prompt: false,
+      selected: form.object.special_analysis, input_html: { class: 'span6' }
+  end
+
+  def tasting_select_for_request(form)
+    collection = [
+      [t('label.no'), false],
+      [t('label.yes'), true]
+    ]
+
+    form.input :tasting, collection: collection, prompt: false,
+      selected: form.object.tasting, input_html: { class: 'span6' }
+  end
 end

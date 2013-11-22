@@ -8,4 +8,7 @@ Fabricator(:analysis_request) do
   related_destiny               { "[900, 901, 902]" }
   harvest                       2005
   request_type                  { AnalysisRequest::REQUEST_TYPES.keys.sample }
+  special_analysis              { [true, false].sample }
+  tasting                       { [true, false].sample }
+  copies                        { rand(10) }
 end

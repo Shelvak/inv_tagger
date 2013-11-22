@@ -21,15 +21,27 @@
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'quantity' %>:</strong>
-        <%= @analysis_request.quantity %> L
+        <%= number_with_delimiter @analysis_request.quantity %> L
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'destiny_code' %>:</strong>
-        <%= @analysis_request.destinies.map(&:to_s).join(' - ' ) %>
+        <%= @analysis_request.destinies.map(&:to_s).join(' - ') %>
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'generated_at' %>:</strong>
         <%= l @analysis_request.generated_at, format: :detailed %>
+      </p>
+      <p>
+      <strong><%= AnalysisRequest.human_attribute_name 'special_analysis' %>:</strong>
+        <%= @analysis_request.special_analysis ? t('label.yes') : t('label.no') %>
+      </p>
+      <p>
+        <strong><%= AnalysisRequest.human_attribute_name 'tasting' %>:</strong>
+        <%= @analysis_request.tasting ? t('label.yes') : t('label.no') %>
+      </p>
+      <p>
+        <strong><%= AnalysisRequest.human_attribute_name 'copies' %>:</strong>
+        <%= @analysis_request.copies %>
       </p>
     </div>
     <div class="span3">

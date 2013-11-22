@@ -64,7 +64,7 @@ class Printer < ActiveRecord::Base
 
         # Razon del solicitante
         duplicate_gilada([
-          { content: chomp_white_spaces(analysis.enrolle.nombre), align: :center, colspan: 6, borders: [:left, :bottom, :right], size: 10 }
+          { content: "<b>#{chomp_white_spaces(analysis.enrolle.nombre)}</b>", align: :center, colspan: 6, borders: [:left, :bottom, :right], size: 10 }
         ]),
 
         # Inscripcion + código solicitante
@@ -82,13 +82,13 @@ class Printer < ActiveRecord::Base
         # Variedad + Año
         duplicate_gilada([
           { content: chomp_white_spaces(analysis.try(:variety).try(:design)), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
-          { content: analysis.harvest.to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
+          { content: number_with_delimiter(analysis.harvest).to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
         ]),
 
         # Cantidad litros
         duplicate_gilada([
           { content: 'Cantidad :' , borders: [:left, :bottom], size: 10 },
-          { content: analysis.quantity.to_s, align: :right, borders: [:bottom], size: 10, colspan: 2 },
+          { content: "<b>#{number_with_delimiter(analysis.quantity)}</b>", align: :right, borders: [:bottom], size: 10, colspan: 2 },
           { content: 'LTS.', align: :left, colspan: 3, borders: [:bottom, :right], size: 10 }
         ]),
 
@@ -122,7 +122,7 @@ class Printer < ActiveRecord::Base
   end
 
   def self.generate_form(analysis)
-    Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4') do |pdf|
+    Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4', margin: 22) do |pdf|
       #height = 25
       full_destinies = analysis.destinies
       destinies = full_destinies.map(&:codpais).map(&:to_s)
@@ -206,7 +206,7 @@ class Printer < ActiveRecord::Base
           { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:harvest)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
-          { content: chomp_white_spaces(analysis.try(:variety).try(:to_s)), align: :center, size: 11, borders: [:bottom] },
+          { content: chomp_white_spaces(analysis.try(:variety).try(:design)), align: :center, size: 11, borders: [:bottom] },
           { content: analysis.try(:variety_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: "3053", align: :center, size: 12, borders: [:bottom] },
           { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom] },
@@ -217,17 +217,17 @@ class Printer < ActiveRecord::Base
         blanquito,
         blanquito,
         [
-          { content: "<u>ANALISIS DE ORIGEN:</u>", align: :left, size: 9.5, height: 30, borders: [:top, :left] },
+          { content: "<u>ANALISIS DE ORIGEN:</u>", align: :left, size: 9.5, height: 14, borders: [:top, :left] },
           { content: analysis.source_analysis, colspan: 8, size: 8, borders: [:top] },
           { content: nil, colspan: 2, borders: [:top, :right] }
         ],
         [
-          { content: ".            <u>OBSERVACIONES:</u>  (O) #{analysis.try(:observations)}", colspan: 7, align: :left, size: 12, height: 30, borders: [:left] },
-          { content: '  ', colspan: 2, borders: [] },
+          { content: "<color rgb='FFFFFF'>...</color>            <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
+          { content: analysis.try(:observations).to_s, colspan: 8, size: 11, height: 75, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
         [
-          { content: "DESTINO:                  #{full_destinies_name}", colspan: 7, size: 9, height: 12, borders: [:left] },
+          { content: "DESTINO:             #{full_destinies_name}", colspan: 7, size: 9, height: 12, borders: [:left] },
           { content: '  ', colspan: 2, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
@@ -257,7 +257,7 @@ class Printer < ActiveRecord::Base
 
       # Do the fuck1ng MBM circle
       pdf.stroke do
-        pdf.rounded_rectangle [643, 533], 65, 35, 18
+        pdf.rounded_rectangle [658, 559], 65, 35, 18
       end
     end
   end

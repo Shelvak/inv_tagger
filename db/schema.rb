@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131122014623) do
+ActiveRecord::Schema.define(version: 20131122034440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20131122014623) do
     t.datetime "deleted_at"
     t.string   "request_type",            limit: 1, default: "p"
     t.string   "depositary_enrolle_code", limit: 7
+    t.text     "source_analysis"
   end
 
   add_index "analysis_requests", ["enrolle_code"], name: "index_analysis_requests_on_enrolle_code", using: :btree

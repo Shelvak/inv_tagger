@@ -47,6 +47,13 @@
   </div>
 
   <p>
+    <strong><%= AnalysisRequest.human_attribute_name 'source_analysis' %>:</strong>
+    <%= content_tag(
+      :div, simple_format(@analysis_request.source_analysis), class: 'well'
+    ) %>
+  </p>
+
+  <p>
     <strong><%= AnalysisRequest.human_attribute_name 'observations' %>:</strong>
     <%= content_tag(
       :div, simple_format(@analysis_request.observations), class: 'well'

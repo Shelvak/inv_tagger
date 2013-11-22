@@ -167,23 +167,23 @@ class Printer < ActiveRecord::Base
           { content: nil, borders: [] },
           { content: '<b>COMÚN:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: (analysis.common? ? 'X' : nil), border_width: 3 },
+          { content: (analysis.common? ? 'X' : nil), align: :center, border_width: 3 },
           { content: nil, borders: [] }
         ],
         [
-          { content: 'DOMICILIO DEPOSITARIO:', align: :left,  colspan: 4, borders: [:left, :top, :right], size: 8, height: 15, border_width: 2, border_lines: [:dotted] },
+          { content: 'DOMICILIO DEPOSITARIO:', align: :left,  colspan: 4, borders: [], size: 8, height: 15 },
           { content: nil, colspan: 2, borders: [] },
           { content: '<b>PREFERENCIAL:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: (analysis.preferential? ? 'X' : nil), border_width: 3 },
+          { content: (analysis.preferential? ? 'X' : nil), align: :center, border_width: 3 },
           { content: nil, borders: [] }
         ],
         [
-          { content: nil, colspan: 4, borders: [:left, :bottom, :right], height: 15, border_width: 2, border_lines: [:dotted] },
+          { content: nil, colspan: 4, borders: [], height: 15 },
           { content: nil, colspan: 2, borders: [] },
           { content: '<b>DECLARACIÓN JURADA:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },
-          { content: (analysis.affidavit? ? 'X' : nil), border_width: 3 },
+          { content: (analysis.affidavit? ? 'X' : nil), align: :center, border_width: 3 },
           { content: nil, borders: [] }
         ],
         blanquito,
@@ -208,7 +208,7 @@ class Printer < ActiveRecord::Base
           { content: analysis.try(:quantity).try(:to_s), align: :center, size: 10, borders: [:bottom] },
           { content: chomp_white_spaces(analysis.try(:variety).try(:to_s)), align: :center, size: 10, borders: [:bottom] },
           { content: analysis.try(:variety_code).try(:to_s), align: :center, size: 10, borders: [:bottom] },
-          { content: "codigo loco", align: :center, size: 8, borders: [:bottom] },
+          { content: "3053", align: :center, size: 8, borders: [:bottom] },
           { content: destinies.join("\n"), align: :center, size: 10, borders: [:bottom] },
           { content: "-", align: :center, size: 7.5, borders: [:bottom] },
           { content: "-", align: :center, size: 7.5, borders: [:bottom] },
@@ -218,7 +218,7 @@ class Printer < ActiveRecord::Base
         blanquito,
         [
           { content: "<u>ANALISIS DE ORIGEN:</u>", align: :left, size: 9.5, height: 30, borders: [:top, :left] },
-          { content: '  ', colspan: 8, size: 7, borders: [:top] },
+          { content: analysis.source_analysis, colspan: 8, size: 7, borders: [:top] },
           { content: nil, colspan: 2, borders: [:top, :right] }
         ],
         [

@@ -112,7 +112,7 @@ class AnalysisRequestsController < ApplicationController
     params.require(:analysis_request).permit(
       :related_enrolle, :related_product, :related_variety, :generated_at,
       :quantity, :related_destiny, :harvest, :observations, :request_type,
-      :related_depositary_enrolle
+      :related_depositary_enrolle, :source_analysis
     )
   end
 end

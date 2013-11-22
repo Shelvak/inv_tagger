@@ -26,6 +26,7 @@ es:
         observations: 'Observaciones'
         request_type: 'Tipo'
         depostary_enrolle: 'Bodega/Fca. depositaria'
+        source_analysis: 'Análisis de origen'
       user:
         name: 'Nombre'
         lastname: 'Apellido'

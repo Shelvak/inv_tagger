@@ -163,7 +163,7 @@ class Printer < ActiveRecord::Base
         blanquito,
         [
           { content: 'Nº BGA/FCA. DEPOSITARIA:', align: :left,  borders: [], size: 11, height: 15 },
-          { content: "ALGO Xd", align: :center, colspan: 4, borders: [:bottom], size: 12, height: 15 },
+          { content: analysis.depositary_enrolle_code, align: :center, colspan: 4, borders: [:bottom], size: 12, height: 15 },
           { content: nil, borders: [] },
           { content: '<b>COMÚN:</b>', align: :left, borders: [], size: 8 },
           { content: nil, borders: [] },

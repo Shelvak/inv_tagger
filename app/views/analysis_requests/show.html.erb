@@ -2,7 +2,11 @@
   <h2><%= t('view.analysis_requests.show_title', owner: @analysis_request.to_s) %></h2>
 
   <div class="row-fluid">
-    <div class="span10">
+    <div class="span9">
+      <p>
+        <strong><%= AnalysisRequest.human_attribute_name 'depositary_enrolle' %>:</strong>
+        <%= @analysis_request.depositary_enrolle %>
+      </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'product_code' %>:</strong>
         <%= @analysis_request.product %>
@@ -28,11 +32,16 @@
         <%= l @analysis_request.generated_at, format: :detailed %>
       </p>
     </div>
-    <div class="span2">
+    <div class="span3">
       <%= link_to(
-        t('view.analysis_requests.download_cardboard'), 
+        t('view.analysis_requests.download_cardboard'),
         download_cardboard_analysis_request_path(@analysis_request),
-        class: 'btn btn-success pull-right', target: '_blank'
+        class: 'btn btn-success', target: '_blank'
+      ) %> |
+      <%= link_to(
+        t('view.analysis_requests.download_form'),
+        download_form_analysis_request_path(@analysis_request),
+        class: 'btn btn-success', target: '_blank'
       ) %>
     </div>
   </div>

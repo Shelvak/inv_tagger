@@ -7,6 +7,9 @@ class AnalysisRequest < ActiveRecord::Base
     'p' => 'preferential'
   }.freeze.with_indifferent_access
 
+  attr_accessor :related_enrolle, :related_product, :related_variety,
+    :related_destiny, :related_depositary_enrolle
+
   validates :generated_at, :quantity, :harvest, presence: true
   validates :harvest, numericality: {
     allow_blank: true, allow_nil: true,
@@ -14,16 +17,15 @@ class AnalysisRequest < ActiveRecord::Base
     less_than_or_equal_to: ->(d) { Date.today.year }
   }
 
-  ['enrolle', 'product', 'destiny'].each do |t|
+  ['enrolle', 'product', 'destiny', 'depositary_enrolle'].each do |t|
     validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
   end
-
-  attr_accessor :related_enrolle, :related_product, :related_variety,
-    :related_destiny
 
   belongs_to :enrolle, class_name: InvEnrolle, foreign_key: 'enrolle_code'
   belongs_to :product, class_name: InvProduct, foreign_key: 'product_code'
   belongs_to :variety, class_name: InvVariety, foreign_key: 'variety_code'
+  belongs_to :depositary_enrolle, class_name: InvEnrolle,
+    foreign_key: 'depositary_enrolle_code'
 
   before_validation :assign_destiny_codes, :assign_only_the_codes
 
@@ -32,7 +34,7 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def assign_only_the_codes
-    if !self.enrolle_code && (enrol_code = self.related_enrolle.match(/\[(.+)\]/))
+    if !self.enrolle_code && (enrol_code = self.related_enrolle.match(/\[(\w\d+)\]/))
       self.enrolle_code = enrol_code[1]
     end
 
@@ -42,6 +44,11 @@ class AnalysisRequest < ActiveRecord::Base
 
     if !self.variety_code && (var_code = self.related_variety.match(/\[(\d+)\]/))
       self.variety_code = var_code[1]
+    end
+
+    if !self.depositary_enrolle_code &&
+      (dep_code = self.related_depositary_enrolle.match(/\[(\w\d+)\]/))
+      self.depositary_enrolle_code = dep_code[1]
     end
   end
 
@@ -59,7 +66,6 @@ class AnalysisRequest < ActiveRecord::Base
     Printer.generate_form(self)
   end
 
-
   def file_path(type)
     Rails.root.join('tmp', 'to_print', "#{self.try(:id)}-#{type}.pdf").to_s
   end
@@ -68,7 +74,7 @@ class AnalysisRequest < ActiveRecord::Base
     self.deleted_at.present?
   end
 
-  ['enrolle', 'product', 'variety'].each do |t|
+  ['enrolle', 'product', 'variety', 'depositary_enrolle'].each do |t|
     define_method("#{t}_blank?") do
       self.send("#{t}_code").blank? && self.send("related_#{t}").blank?
     end

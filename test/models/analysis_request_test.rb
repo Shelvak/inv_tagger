@@ -8,7 +8,7 @@ class AnalysisRequestTest < ActiveSupport::TestCase
   test 'create' do
     assert_difference 'AnalysisRequest.count' do
       AnalysisRequest.create!(Fabricate.attributes_for(:analysis_request))
-    end 
+    end
   end
 
   test 'validates blank attributes' do
@@ -22,18 +22,20 @@ class AnalysisRequestTest < ActiveSupport::TestCase
     @analysis_request.generated_at = ''
     @analysis_request.quantity = ''
     @analysis_request.harvest = ''
-    
+    @analysis_request.related_depositary_enrolle = ''
+    @analysis_request.depositary_enrolle_code = ''
+
     assert @analysis_request.invalid?
-    assert_equal 6, @analysis_request.errors.size
+    assert_equal 7, @analysis_request.errors.size
 
     [
       :related_enrolle, :related_product, :generated_at,
-      :quantity, :related_destiny, :harvest
+      :quantity, :related_destiny, :harvest, :related_depositary_enrolle
     ].each do |attr|
       assert_error_message(@analysis_request, attr)
     end
   end
-  
+
   test 'validates correct range of attributes' do
     @analysis_request.harvest = 1200
     assert @analysis_request.invalid?

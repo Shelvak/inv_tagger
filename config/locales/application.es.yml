@@ -25,6 +25,7 @@ es:
         harvest: 'Cosecha'
         observations: 'Observaciones'
         request_type: 'Tipo'
+        depostary_enrolle: 'Bodega/Fca. depositaria'
       user:
         name: 'Nombre'
         lastname: 'Apellido'
@@ -84,7 +85,8 @@ es:
       empty_index:
         html: 'No se ha creado ninguna solicitud hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva solicitud de análisis</span>'
       new: 'Nueva solicitud de análisis'
-      download_cardboard: 'Descargar Cartulina'
+      download_cardboard: 'Cartulina'
+      download_form: 'Formulario'
       types:
         affidavit: 'Declaración jurada'
         common: 'Común'

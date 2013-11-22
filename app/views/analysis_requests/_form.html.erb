@@ -9,8 +9,8 @@
         <%= enrolle_code_input(f) %>
       </div>
       <div class="span4">
-        <%= f.label :destiny_code, required: true %>
-        <%= destiny_code_input(f) %>
+        <%= f.label :depostary_enrolle, required: true %>
+        <%= depositary_enrolle_code_input(f) %>
       </div>
       <div class="span2">
         <%= request_type_for_analysis_request(f) %>
@@ -25,18 +25,22 @@
         <%= f.label :product_code, required: true %>
         <%= product_code_input(f) %>
       </div>
-
       <div class="span2">
         <%= f.input :harvest, input_html: { class: 'span11' } %>
       </div>
-
+      <div class="span2">
+        <%= f.input :quantity, as: :string, input_html: { class: 'span9' } %>
+      </div>
       <div class="span4">
         <%= f.label :variety_code %>
         <%= variety_code_input(f) %>
       </div>
+    </div>
 
-      <div class="span2">
-        <%= f.input :quantity, as: :string, input_html: { class: 'span9' } %>
+    <div class="row-fluid">
+      <div class="span6">
+        <%= f.label :destiny_code, required: true %>
+        <%= destiny_code_input(f) %>
       </div>
     </div>
 

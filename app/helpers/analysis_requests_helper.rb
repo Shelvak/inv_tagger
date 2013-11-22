@@ -51,4 +51,11 @@ module AnalysisRequestsHelper
     form.input :request_type, collection: collection,
       selected: selected, include_blank: false, input_html: { class: 'span10' }
   end
+
+  def depositary_enrolle_code_input(f)
+    autocomplete_field_input(
+      f, :related_depositary_enrolle, value: f.object.depositary_enrolle,
+      path: inv_communications_enrolle_path(format: :json)
+    )
+  end
 end

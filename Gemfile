@@ -8,7 +8,6 @@ gem 'simple_form'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns'
 gem 'validates_timeliness'
-gem 'capistrano'
 gem 'activerecord-be_readonly'
 
 gem "prawn", "~> 1.0.0.rc2"
@@ -19,6 +18,11 @@ gem 'devise-async'
 gem 'cancan'
 gem 'role_model'
 gem 'sidekiq'
+
+# Deployer Gems
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
 
 # Old assets group
 gem 'sass-rails'

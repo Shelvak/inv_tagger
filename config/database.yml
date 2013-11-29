@@ -27,4 +27,4 @@ inv_db:
   database: Bodegas
   username: postgres
   password: postgres
-  host: 192.168.0.15
+  host: <%= APP_CONFIG['inv_db_ip'] %>

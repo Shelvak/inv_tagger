@@ -27,6 +27,7 @@ namespace :deploy do
     on roles(:all) do
       within release_path do
         execute :rake, 'tmp:clear'
+        execute :mkdir, 'tmp/to_print'
       end
     end
   end

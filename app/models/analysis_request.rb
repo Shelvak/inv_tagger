@@ -111,6 +111,6 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def variety_short_names
-    variety_names.map {|v| v.truncate(15) }
+    variety_names.size > 2 ? variety_names.map {|v| v.truncate(15) } : variety_names
   end
 end

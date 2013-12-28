@@ -68,7 +68,7 @@ class AnalysisRequestsControllerTest < ActionController::TestCase
   end
 
   test "should update analysis_request" do
-    put :update, id: @analysis, analysis_request: { harvest: 1970 }
+    patch :update, id: @analysis, analysis_request: { harvest: 1970 }
     assert_redirected_to analysis_request_url(assigns(:analysis_request))
   end
 

@@ -18,7 +18,7 @@ es:
       analysis_request:
         enrolle_code: 'Exportador'
         product_code: 'Producto'
-        variety_code: 'Variedad'
+        variety_codes: 'Variedades'
         generated_at: 'Fecha'
         quantity: 'Cant.'
         destiny_code: 'País de Destino'

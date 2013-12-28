@@ -8,7 +8,7 @@
           <tr>
             <th><%= AnalysisRequest.human_attribute_name 'enrolle_code' %></th>
             <th><%= AnalysisRequest.human_attribute_name 'product_code' %></th>
-            <th><%= AnalysisRequest.human_attribute_name 'variety_code' %></th>
+            <th><%= AnalysisRequest.human_attribute_name 'variety_codes' %></th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -19,7 +19,7 @@
             <tr class="<%= 'error' if deleted %>">
               <td><%= analysis.enrolle %></td>
               <td><%= analysis.product %></td>
-              <td><%= analysis.variety %></td>
+              <td><%= analysis.varieties %></td>
               <td><%= link_to_show analysis %></td>
               <% unless deleted %>
                 <td><%= link_to_edit(

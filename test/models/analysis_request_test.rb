@@ -14,7 +14,7 @@ class AnalysisRequestTest < ActiveSupport::TestCase
   test 'validates blank attributes' do
     @analysis_request.related_enrolle = ''
     @analysis_request.related_product = ''
-    @analysis_request.related_variety = ''
+    @analysis_request.related_varieties = ''
     @analysis_request.related_destiny = ''
     @analysis_request.enrolle_code = ''
     @analysis_request.product_code = ''

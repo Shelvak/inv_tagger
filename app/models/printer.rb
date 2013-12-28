@@ -81,7 +81,7 @@ class Printer < ActiveRecord::Base
 
         # Variedad + Año
         duplicate_gilada([
-          { content: chomp_white_spaces(analysis.try(:variety).try(:design)), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
+          { content: chomp_white_spaces(analysis.try(:variety_names).try(:join, ' - ')), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
           { content: number_with_delimiter(analysis.harvest).to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
         ]),
 
@@ -206,8 +206,8 @@ class Printer < ActiveRecord::Base
           { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:harvest)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
-          { content: chomp_white_spaces(analysis.try(:variety).try(:design)), align: :center, size: 11, borders: [:bottom] },
-          { content: analysis.try(:variety_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
+          { content: chomp_white_spaces(analysis.try(:variety_names).try(:join, "\n")), align: :center, size: 11, borders: [:bottom] },
+          { content: analysis.try(:variety_codes).try(:join, "\n"), align: :center, size: 11, borders: [:bottom] },
           { content: "3053", align: :center, size: 12, borders: [:bottom] },
           { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom] },
           { content: (analysis.special_analysis ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom] },

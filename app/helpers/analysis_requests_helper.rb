@@ -20,9 +20,9 @@ module AnalysisRequestsHelper
     )
   end
 
-  def variety_code_input(f)
+  def variety_codes_input(f)
     autocomplete_field_input(
-      f, :related_variety, value: f.object.variety, required: false,
+      f, :related_varieties, value: f.object.variety_codes, required: false,
       path: inv_communications_variety_path(format: :json)
     )
   end

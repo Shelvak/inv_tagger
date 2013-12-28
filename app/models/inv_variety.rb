@@ -4,8 +4,11 @@ class InvVariety < InvDbModel
 
   has_magick_columns codvar: :string, design: :string
 
+  alias_attribute :name, :design
+  alias_attribute :code, :codvar
+
   def to_s
-    "[#{self.codvar}] #{self.design}"
+    "[#{self.code}] #{self.name}"
   end
 
   alias_method :label, :to_s

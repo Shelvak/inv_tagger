@@ -7,7 +7,7 @@ class AnalysisRequest < ActiveRecord::Base
     'p' => 'preferential'
   }.freeze.with_indifferent_access
 
-  attr_accessor :related_enrolle, :related_product, :related_variety,
+  attr_accessor :related_enrolle, :related_product, :related_varieties,
     :related_destiny, :related_depositary_enrolle
 
   validates :generated_at, :quantity, :harvest, presence: true
@@ -17,17 +17,16 @@ class AnalysisRequest < ActiveRecord::Base
     less_than_or_equal_to: ->(d) { Date.today.year }
   }
 
-  ['enrolle', 'product', 'destiny', 'depositary_enrolle'].each do |t|
+  ['enrolle', 'product', 'destiny', 'varieties', 'depositary_enrolle'].each do |t|
     validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
   end
 
   belongs_to :enrolle, class_name: InvEnrolle, foreign_key: 'enrolle_code'
   belongs_to :product, class_name: InvProduct, foreign_key: 'product_code'
-  belongs_to :variety, class_name: InvVariety, foreign_key: 'variety_code'
   belongs_to :depositary_enrolle, class_name: InvEnrolle,
     foreign_key: 'depositary_enrolle_code'
 
-  before_validation :assign_destiny_codes, :assign_only_the_codes
+  before_validation :assign_only_the_codes
 
   def to_s
     self.enrolle
@@ -42,17 +41,15 @@ class AnalysisRequest < ActiveRecord::Base
       self.product_code = prod_code[1]
     end
 
-    if !self.variety_code && (var_code = self.related_variety.match(/\[(\d+)\]/))
-      self.variety_code = var_code[1]
-    end
+    self.related_varieties.scan(/\[(\d+)\]/).each do |code, _|
+      self.variety_codes += [code.to_i] unless self.variety_codes.include?(code.to_i)
+    end if self.related_varieties.present?
 
     if !self.depositary_enrolle_code &&
       (dep_code = self.related_depositary_enrolle.match(/\[(\w\d+)\]/))
       self.depositary_enrolle_code = dep_code[1]
     end
-  end
 
-  def assign_destiny_codes
     if self.related_destiny.present?
       self.destiny_codes = self.related_destiny.split(',').map(&:to_i)
     end
@@ -74,10 +71,14 @@ class AnalysisRequest < ActiveRecord::Base
     self.deleted_at.present?
   end
 
-  ['enrolle', 'product', 'variety', 'depositary_enrolle'].each do |t|
+  ['enrolle', 'product', 'depositary_enrolle'].each do |t|
     define_method("#{t}_blank?") do
       self.send("#{t}_code").blank? && self.send("related_#{t}").blank?
     end
+  end
+
+  def varieties_blank?
+    self.variety_codes.empty? && self.related_varieties.blank?
   end
 
   def destiny_blank?
@@ -99,5 +100,13 @@ class AnalysisRequest < ActiveRecord::Base
 
   REQUEST_TYPES.each do |k, v|
     define_method("#{v}?") { self.request_type == k }
+  end
+
+  def variety_names
+    self.variety_codes.map { |v| InvVariety.find(v).name }
+  end
+
+  def varieties
+    self.variety_codes.map { |v| InvVariety.find(v).to_s }
   end
 end

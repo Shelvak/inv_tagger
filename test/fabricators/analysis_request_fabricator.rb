@@ -1,11 +1,11 @@
 Fabricator(:analysis_request) do
-  related_enrolle               { "[A00006] #{Faker::Name.name}"  }
-  related_depositary_enrolle    { "[A00002] #{Faker::Name.name}"  }
-  related_product               { "[7] #{Faker::Name.name}" }
-  related_variety               { "[113] #{Faker::Name.name}" }
+  related_enrolle               { InvEnrolle.take.to_s }
+  related_depositary_enrolle    { InvEnrolle.take.to_s }
+  related_product               { InvProduct.take.to_s }
+  related_varieties             { InvVariety.take.to_s }
   generated_at                  { rand(9).days.ago }
   quantity                      { rand(999) }
-  related_destiny               { "[900, 901, 902]" }
+  related_destiny               { "[200, 201, 202]" }
   harvest                       2005
   request_type                  { AnalysisRequest::REQUEST_TYPES.keys.sample }
   special_analysis              { [true, false].sample }

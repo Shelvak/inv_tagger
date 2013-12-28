@@ -15,8 +15,6 @@ window.Autocomplete =
       input.data('tokenized', true)
 
 jQuery ($) ->
-  # Doble iniciador por turbolinks
-  Autocomplete.tokenizeInputs()
-
   $(document).on 'page:change', ->
     Autocomplete.tokenizeInputs()
+

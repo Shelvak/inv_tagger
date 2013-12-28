@@ -2,7 +2,7 @@ Fabricator(:analysis_request) do
   related_enrolle               { InvEnrolle.take.to_s }
   related_depositary_enrolle    { InvEnrolle.take.to_s }
   related_product               { InvProduct.take.to_s }
-  related_varieties             { InvVariety.take.to_s }
+  related_varieties             { InvVariety.take.code.to_s }
   generated_at                  { rand(9).days.ago }
   quantity                      { rand(999) }
   related_destiny               { "[200, 201, 202]" }

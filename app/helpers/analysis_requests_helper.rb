@@ -21,10 +21,15 @@ module AnalysisRequestsHelper
   end
 
   def variety_codes_input(f)
-    autocomplete_field_input(
-      f, :related_varieties, value: f.object.variety_codes, required: false,
-      path: inv_communications_variety_path(format: :json)
-    )
+    f.input :related_varieties, label: false, input_html: {
+      class: 'span10', autocomplete: 'off', data: {
+        token_autocomplete: true,
+        load: f.object.try(:varieties),
+        path: inv_communications_variety_path(format: :json),
+        no_result: t('shared.no_result'),
+        tokenized: false
+      }
+    }
   end
 
   def destiny_code_input(f)

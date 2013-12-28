@@ -5,7 +5,7 @@ class InvEnrolle < InvDbModel
   has_magick_columns nroins: :string, nombre: :string
 
   def to_s
-    "[#{self.nroins}] #{self.nombre}"
+    "[#{self.nroins}] #{self.nombre.strip}"
   end
 
   alias_method :label, :to_s

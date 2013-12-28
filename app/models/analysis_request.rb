@@ -41,7 +41,7 @@ class AnalysisRequest < ActiveRecord::Base
       self.product_code = prod_code[1]
     end
 
-    self.related_varieties.scan(/\[(\d+)\]/).each do |code, _|
+    self.related_varieties.split(',').each do |code|
       self.variety_codes += [code.to_i] unless self.variety_codes.include?(code.to_i)
     end if self.related_varieties.present?
 
@@ -50,9 +50,9 @@ class AnalysisRequest < ActiveRecord::Base
       self.depositary_enrolle_code = dep_code[1]
     end
 
-    if self.related_destiny.present?
-      self.destiny_codes = self.related_destiny.split(',').map(&:to_i)
-    end
+    self.related_destiny.split(',').each do |d|
+      self.destiny_codes += [d.to_i] unless self.destiny_codes.include?(d.to_i)
+    end if self.related_destiny.present?
   end
 
   def generate_cardboard
@@ -103,10 +103,14 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def variety_names
-    self.variety_codes.map { |v| InvVariety.find(v).name }
+    self.variety_codes.map { |v| InvVariety.find(v).name.try(:strip) }
   end
 
   def varieties
     self.variety_codes.map { |v| InvVariety.find(v).to_s }
+  end
+
+  def variety_short_names
+    variety_names.map {|v| v.truncate(15) }
   end
 end

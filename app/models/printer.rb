@@ -64,7 +64,7 @@ class Printer < ActiveRecord::Base
 
         # Razon del solicitante
         duplicate_gilada([
-          { content: "<b>#{chomp_white_spaces(analysis.enrolle.nombre)}</b>", align: :center, colspan: 6, borders: [:left, :bottom, :right], size: 10 }
+          { content: "<b>#{analysis.enrolle.nombre.strip}</b>", align: :center, colspan: 6, borders: [:left, :bottom, :right], size: 10 }
         ]),
 
         # Inscripcion + código solicitante
@@ -76,12 +76,12 @@ class Printer < ActiveRecord::Base
         # Producto
         duplicate_gilada([
           { content: 'Producto :', align: :left, borders: [:left, :bottom], size: 10 },
-          { content: chomp_white_spaces(analysis.product.design), align: :left, colspan: 5, borders: [:bottom, :right], size: 10 }
+          { content: analysis.product.design.strip, align: :left, colspan: 5, borders: [:bottom, :right], size: 10 }
         ]),
 
         # Variedad + Año
         duplicate_gilada([
-          { content: chomp_white_spaces(analysis.try(:variety_names).try(:join, ' - ')), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
+          { content: analysis.try(:variety_short_names).try(:join, ' - '), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
           { content: number_with_delimiter(analysis.harvest).to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
         ]),
 
@@ -126,7 +126,7 @@ class Printer < ActiveRecord::Base
       #height = 25
       full_destinies = analysis.destinies
       destinies = full_destinies.map(&:codpais).map(&:to_s)
-      full_destinies_name = full_destinies.map { |d| chomp_white_spaces(d.try(:nombre)) }.join(', ')
+      full_destinies_name = full_destinies.map { |d| d.try(:nombre).strip }.join(', ')
 
       blanquito = [ { content: nil, colspan: 7, borders: [], height: 5 } ]
 
@@ -202,11 +202,11 @@ class Printer < ActiveRecord::Base
           { content: "CANTIDAD\nDE COPIAS", align: :center, size: 8 }
         ],
         [
-          { content: [chomp_white_spaces(analysis.try(:product).try(:design)), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom] },
+          { content: [analysis.try(:product).try(:design).try(:strip), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom] },
           { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:harvest)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
           { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
-          { content: chomp_white_spaces(analysis.try(:variety_names).try(:join, "\n")), align: :center, size: 11, borders: [:bottom] },
+          { content: analysis.try(:variety_names).try(:join, "\n"), align: :center, size: 11, borders: [:bottom] },
           { content: analysis.try(:variety_codes).try(:join, "\n"), align: :center, size: 11, borders: [:bottom] },
           { content: "3053", align: :center, size: 12, borders: [:bottom] },
           { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom] },
@@ -272,9 +272,5 @@ class Printer < ActiveRecord::Base
 
   def self.number_with_delimiter(number)
     ActionController::Base.helpers.number_with_delimiter number
-  end
-
-  def self.chomp_white_spaces(string)
-    (string && string[-1] == ' ') ? chomp_white_spaces(string[0...-1]) : string
   end
 end

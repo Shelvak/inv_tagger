@@ -17,7 +17,7 @@
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'variety_codes' %>:</strong>
-        <%= @analysis_request.varieties %>
+        <%= @analysis_request.varieties.join(' - ') %>
       </p>
       <p>
         <strong><%= AnalysisRequest.human_attribute_name 'quantity' %>:</strong>

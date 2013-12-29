@@ -24,7 +24,7 @@ module AnalysisRequestsHelper
     f.input :related_varieties, label: false, input_html: {
       class: 'span10', autocomplete: 'off', data: {
         token_autocomplete: true,
-        load: f.object.try(:varieties),
+        load: f.object.try(:varieties).to_json,
         path: inv_communications_variety_path(format: :json),
         no_result: t('shared.no_result'),
         tokenized: false

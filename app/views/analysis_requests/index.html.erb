@@ -19,7 +19,7 @@
             <tr class="<%= 'error' if deleted %>">
               <td><%= analysis.enrolle %></td>
               <td><%= analysis.product %></td>
-              <td><%= analysis.varieties %></td>
+              <td><%= analysis.variety_short_names.join(' - ') %></td>
               <td><%= link_to_show analysis %></td>
               <% unless deleted %>
                 <td><%= link_to_edit(

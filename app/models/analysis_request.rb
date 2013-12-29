@@ -103,7 +103,7 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def varieties
-    self.variety_codes.map { |v| InvVariety.find(v).to_s }
+    InvVariety.where(codvar: self.variety_codes)
   end
 
   def variety_short_names

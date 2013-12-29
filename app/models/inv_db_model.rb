@@ -1,6 +1,7 @@
 class InvDbModel < ActiveRecord::Base
   self.abstract_class = true
   establish_connection "inv_db"
+  be_readonly
 
   def as_json(options = nil)
     default_options = {

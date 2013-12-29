@@ -17,7 +17,7 @@ class AnalysisRequest < ActiveRecord::Base
     less_than_or_equal_to: ->(d) { Date.today.year }
   }
 
-  ['enrolle', 'product', 'destiny', 'varieties', 'depositary_enrolle'].each do |t|
+  ['enrolle', 'product', 'destiny', 'depositary_enrolle'].each do |t|
     validates :"related_#{t}", presence: true, if: :"#{t}_blank?"
   end
 
@@ -75,10 +75,6 @@ class AnalysisRequest < ActiveRecord::Base
     define_method("#{t}_blank?") do
       self.send("#{t}_code").blank? && self.send("related_#{t}").blank?
     end
-  end
-
-  def varieties_blank?
-    self.variety_codes.empty? && self.related_varieties.blank?
   end
 
   def destiny_blank?

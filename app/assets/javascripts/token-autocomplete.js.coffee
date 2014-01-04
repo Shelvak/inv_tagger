@@ -13,8 +13,3 @@ window.Autocomplete =
         noResultsText: input.data('no-result'),
         searchingText: false
       input.data('tokenized', true)
-
-jQuery ($) ->
-  $(document).on 'page:change', ->
-    Autocomplete.tokenizeInputs()
-

@@ -10,7 +10,7 @@ class AnalysisRequest < ActiveRecord::Base
   attr_accessor :related_enrolle, :related_product, :related_varieties,
     :related_destiny, :related_depositary_enrolle
 
-  validates :generated_at, :quantity, :harvest, presence: true
+  validates :generated_at, :quantity, presence: true
   validates :harvest, numericality: {
     allow_blank: true, allow_nil: true,
     greater_than_or_equal_to: 1500,

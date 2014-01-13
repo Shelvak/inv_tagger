@@ -21,16 +21,15 @@ class AnalysisRequestTest < ActiveSupport::TestCase
     @analysis_request.destiny_codes = ''
     @analysis_request.generated_at = ''
     @analysis_request.quantity = ''
-    @analysis_request.harvest = ''
     @analysis_request.related_depositary_enrolle = ''
     @analysis_request.depositary_enrolle_code = ''
 
     assert @analysis_request.invalid?
-    assert_equal 7, @analysis_request.errors.size
+    assert_equal 6, @analysis_request.errors.size
 
     [
       :related_enrolle, :related_product, :generated_at,
-      :quantity, :related_destiny, :harvest, :related_depositary_enrolle
+      :quantity, :related_destiny, :related_depositary_enrolle
     ].each do |attr|
       assert_error_message(@analysis_request, attr)
     end

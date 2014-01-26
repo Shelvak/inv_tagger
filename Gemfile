@@ -10,6 +10,7 @@ gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'activerecord-be_readonly'
 gem "prawn", "~> 1.0.0.rc2"
+gem 'iconv'
 
 # Deploy gems
 gem 'capistrano'
@@ -38,6 +39,7 @@ gem 'turbolinks'
 
 group :development do
   gem 'thin'
+  gem 'awesome_print'
 end
 
 group :test do

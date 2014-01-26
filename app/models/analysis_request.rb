@@ -87,7 +87,8 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def destinies
-    InvDestiny.where(codpais: self.destiny_codes)
+    (self.destiny_codes.any? { |d| d == 99999 } ? [$europa_obj] : []) +
+      InvDestiny.where(codpais: self.destiny_codes)
   end
 
   def destinies=(codes)
@@ -99,7 +100,7 @@ class AnalysisRequest < ActiveRecord::Base
   end
 
   def variety_names
-    self.variety_codes.map { |v| InvVariety.find(v).name.try(:strip) }
+    self.variety_codes.map { |v| InvVariety.find(v).name }
   end
 
   def varieties

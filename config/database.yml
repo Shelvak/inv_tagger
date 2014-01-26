@@ -27,4 +27,5 @@ inv_db:
   database: Bodegas
   username: postgres
   password: postgres
-  host: <%= Rails.env.production? ? '192.168.0.4' : '192.168.0.15' %> # 192.168.0.4
+  encoding: latin1
+  host: <%= Rails.env.production? ? '192.168.0.4' : '192.168.0.15' %>

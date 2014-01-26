@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140113233501) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity",                                          null: false
-    t.integer  "harvest",                                           null: false
+    t.integer  "harvest"
     t.text     "observations"
     t.datetime "deleted_at"
     t.string   "request_type",            limit: 1, default: "p"

@@ -7,8 +7,12 @@ class InvVariety < InvDbModel
   alias_attribute :name, :design
   alias_attribute :code, :codvar
 
+  def name
+    Iconv.iconv('UTF-8', 'LATIN1', self.design.strip).join
+  end
+
   def to_s
-    "[#{self.codvar}] #{self.name.strip}"
+    "[#{self.codvar}] #{self.name}"
   end
 
   alias_method :label, :to_s

@@ -82,7 +82,7 @@ class Printer < ActiveRecord::Base
         # Variedad + Año
         duplicate_gilada([
           { content: analysis.try(:variety_short_names).try(:join, ' - '), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
-          { content: number_with_delimiter(analysis.harvest || '').to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
+          { content: number_with_delimiter(analysis.harvest || '--').to_s, align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
         ]),
 
         # Cantidad litros

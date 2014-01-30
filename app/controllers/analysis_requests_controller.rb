@@ -8,7 +8,7 @@ class AnalysisRequestsController < ApplicationController
   # GET /analysis_requests
   def index
     @title = t('view.analysis_requests.index_title')
-    @analysis_requests = AnalysisRequest.order(:id).page(params[:page])
+    @analysis_requests = AnalysisRequest.order(id: :desc).page(params[:page])
   end
 
   # GET /analysis_requests/1

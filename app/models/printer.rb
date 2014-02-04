@@ -222,8 +222,8 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 2, borders: [:top, :right] }
         ],
         [
-          { content: "<color rgb='FFFFFF'>...</color>            <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
-          { content: analysis.try(:observations).to_s, colspan: 8, size: 11, height: 75, borders: [] },
+          { content: "<color rgb='FFFFFF'>.</color>              <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
+          { content: analysis.try(:observations).to_s.gsub("\n ", "\n<color rgb='FFFFFF'>.</color>"), colspan: 8, size: 11, height: 75, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
         [

@@ -11,7 +11,7 @@ class InvDestiny < InvDbModel
   alias_attribute :name, :nombre
 
   def name
-    Iconv.iconv('UTF-8', 'LATIN1', self.nombre.strip).join
+    Iconv.iconv('UTF-8', 'LATIN1', self.nombre.strip.gsub(/\W+/, ' ')).join
   end
 
   def to_s
@@ -39,7 +39,7 @@ class InvDestiny < InvDbModel
   end
 
   def self.filtered_list(query)
-    if query.to_s.match(/M\.?|M\.?C\.?|M\.?C\.?E\.?|#{$europa_obj.nombre}/i)
+    if query.to_s.match(/mce|#{$europa_obj.nombre}/i)
       [$europa_obj]
     else
       query.present? ? magick_search(query) : scoped

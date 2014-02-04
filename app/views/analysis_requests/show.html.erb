@@ -67,9 +67,9 @@
 
   <p>
     <strong><%= AnalysisRequest.human_attribute_name 'observations' %>:</strong>
-    <%= content_tag(
-      :div, simple_format(@analysis_request.observations), class: 'well'
-    ) %>
+    <div class='well'>
+      <%= simple_format @analysis_request.observations %>
+    </div>
   </p>
 
 </div>

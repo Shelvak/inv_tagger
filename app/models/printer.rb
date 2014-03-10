@@ -127,6 +127,16 @@ class Printer < ActiveRecord::Base
       full_destinies = analysis.destinies
       destinies = full_destinies.map(&:form_code).map(&:to_s)
       full_destinies_name = full_destinies.map { |d| d.try(:name) }.join(', ')
+      counts = analysis.observations.to_s.count("\n")
+      observation_size = if counts < 6
+                           11
+                         elsif counts < 7
+                           9
+                         elsif counts < 9
+                           7
+                         else
+                           5
+                         end
 
       blanquito = [ { content: nil, colspan: 7, borders: [], height: 5 } ]
 
@@ -223,7 +233,8 @@ class Printer < ActiveRecord::Base
         ],
         [
           { content: "<color rgb='FFFFFF'>.</color>              <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
-          { content: analysis.try(:observations).to_s.gsub("\n ", "\n<color rgb='FFFFFF'>.</color>"), colspan: 8, size: 11, height: 75, borders: [] },
+          { content: chomp_multi_whitespaces(analysis.try(:observations).to_s).gsub("\n ", "\n<color rgb='FFFFFF'>.</color>"),
+            colspan: 8, size: observation_size, height: 75, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
         [
@@ -272,5 +283,11 @@ class Printer < ActiveRecord::Base
 
   def self.number_with_delimiter(number)
     ActionController::Base.helpers.number_with_delimiter number
+  end
+
+  def self.chomp_multi_whitespaces(string)
+    string.split("\n").map do |e|
+      e.gsub(/\S(\s{3,})\S/) { |g| g.gsub!($1, '  ') }
+    end.join("\n")
   end
 end

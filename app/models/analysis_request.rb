@@ -8,7 +8,7 @@ class AnalysisRequest < ActiveRecord::Base
   }.freeze.with_indifferent_access
 
   attr_accessor :related_enrolle, :related_product, :related_varieties,
-    :related_destiny, :related_depositary_enrolle
+    :related_destiny, :related_depositary_enrolle, :obs0, :obs1, :obs2
 
   validates :generated_at, :quantity, presence: true
   validates :harvest, numericality: {
@@ -26,7 +26,7 @@ class AnalysisRequest < ActiveRecord::Base
   belongs_to :depositary_enrolle, class_name: InvEnrolle,
     foreign_key: 'depositary_enrolle_code'
 
-  before_validation :assign_only_the_codes
+  before_validation :format_observations, :assign_only_the_codes
 
   def to_s
     self.enrolle
@@ -109,5 +109,18 @@ class AnalysisRequest < ActiveRecord::Base
 
   def variety_short_names
     variety_names.size > 2 ? variety_names.map {|v| v.truncate(15) } : variety_names
+  end
+
+  def format_observations
+    self.set_observations
+  end
+
+  def set_observations
+    if self.obs0 || self.obs1 || self.obs2
+      self.observations = (0..self.obs0.size).map do |i|
+        row = [obs0[i], obs1[i], obs2[i]].join("\t")
+        row.present? ? row : nil
+      end.compact.join("\n")
+    end
   end
 end

@@ -20,14 +20,12 @@ class AnalysisRequestsController < ApplicationController
   def new
     @title = t('view.analysis_requests.new_title')
     @analysis_request = AnalysisRequest.new
-    @observations = observations
   end
 
   # POST /analysis_requests
   def create
     @title = t('view.analysis_requests.new_title')
     @analysis_request = AnalysisRequest.new(analysis_request_params)
-    @observations = observations
 
     respond_to do |format|
       if @analysis_request.save
@@ -41,8 +39,6 @@ class AnalysisRequestsController < ApplicationController
   # GET /analysis_requests/1/edit
   def edit
     @title = t('view.analysis_requests.edit_title')
-    @observations = observations
-
     if @analysis_request.deleted?
       redirect_to analysis_requests_url, notice: t('view.analysis_requests.can_not_edit')
     end
@@ -51,7 +47,6 @@ class AnalysisRequestsController < ApplicationController
   # PUT /analysis_requests/1
   def update
     @title = t('view.analysis_requests.edit_title')
-    @observations = observations
 
     respond_to do |format|
       if @analysis_request.update(analysis_request_params)
@@ -118,20 +113,7 @@ class AnalysisRequestsController < ApplicationController
       :related_enrolle, :related_product, :related_varieties, :generated_at,
       :quantity, :related_destiny, :harvest, :observations, :request_type,
       :related_depositary_enrolle, :source_analysis, :special_analysis,
-      :tasting, :copies, obs0: [], obs1: [], obs2: []
+      :tasting, :copies
     )
-  end
-
-  def observations
-    @analysis_request.set_observations
-    obs   = @analysis_request.observations.to_s
-    final = obs.split("\n").map do |e|
-      row = e.split("\t")
-      size = row.size
-
-      size == 3 ? row : ([row] + ([''] * (3 - size))).flatten
-    end
-
-    final.any? ? final : [['', '', '']]
   end
 end

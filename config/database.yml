@@ -28,4 +28,4 @@ inv_db:
   username: postgres
   password: postgres
   encoding: latin1
-  host: <%= Rails.env.production? ? '192.168.0.4' : '192.168.0.14' %>
+  host: <%= Rails.env.production? ? '192.168.0.4' : '192.168.0.15' %>

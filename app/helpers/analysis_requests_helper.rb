@@ -83,21 +83,4 @@ module AnalysisRequestsHelper
     form.input :tasting, collection: collection, prompt: false,
       selected: form.object.tasting, input_html: { class: 'span6' }
   end
-
-  def observations_fields(form, data = nil)
-    data ||= ['', '', '']
-    obs_fields = ''
-
-    data.each_with_index do |obs, i|
-      input = form.input "obs#{i}".to_sym,
-        as: :string, label: false, input_html: {
-        class: 'span12', required: false,
-        name: "analysis_request[obs#{i}][]", value: obs
-      }
-
-      obs_fields << content_tag(:span, raw(input), class: "span#{i.zero? ? 2 : 5}")
-    end
-
-    content_tag :div, raw(obs_fields), class: 'row-fluid'
-  end
 end

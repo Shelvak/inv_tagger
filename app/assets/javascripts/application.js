@@ -28,4 +28,3 @@
 //= require users
 //= require jquery-customs/tokeninput
 //= require token-autocomplete
-//= require analysis_requests

@@ -40,7 +40,6 @@ gem 'turbolinks'
 group :development do
   gem 'thin'
   gem 'awesome_print'
-  gem 'pry-nav'
 end
 
 group :test do

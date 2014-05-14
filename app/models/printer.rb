@@ -233,7 +233,7 @@ class Printer < ActiveRecord::Base
         ],
         [
           { content: "<color rgb='FFFFFF'>.</color>              <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
-          { content: parse_observations(analysis.try(:observations).to_s),
+          { content: chomp_multi_whitespaces(analysis.try(:observations).to_s).gsub("\n ", "\n<color rgb='FFFFFF'>.</color>"),
             colspan: 8, size: observation_size, height: 75, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
@@ -285,28 +285,9 @@ class Printer < ActiveRecord::Base
     ActionController::Base.helpers.number_with_delimiter number
   end
 
-  def self.parse_observations(obs)
-    obs.split("\n").map do |row|
-      new_row = ''
-
-      row.split("\t").each_with_index do |sentence, i|
-        n = i.zero? ? 18 : 30
-        length = sentence.to_s.length
-
-        new_row << (i.zero? ? '- ' : '  ')
-        new_row << if length < n
-                     [
-                       sentence.to_s,
-                       '<color rgb="FFFFFF">',
-                       '_' * (n - length),
-                       '</color>'
-                     ].reduce(&:+)
-                   else
-                     sentence[0..n]
-                   end
-      end
-
-      new_row
+  def self.chomp_multi_whitespaces(string)
+    string.split("\n").map do |e|
+      e.gsub(/\S(\s{3,})\S/) { |g| g.gsub!($1, '  ') }
     end.join("\n")
   end
 end

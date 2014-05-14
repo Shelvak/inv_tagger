@@ -60,19 +60,11 @@
       </div>
     </div>
 
-    <div id="observations_fields">
-      <%= f.label :observations %>
-
-      <% @observations.each do |row| %>
-        <%= observations_fields(f, row) %>
-      <% end %>
-    </div>
-
-    <div class="pull-right">
-      <%= link_to 'Otra observación', '#', data: {
-        template: observations_fields(f).gsub("\n", ''),
-        append_to: '#observations_fields'
-      }, class: 'btn btn-success' %>
+    <div class="row-fluid">
+      <div class="span12">
+        <%= f.input :observations,
+          input_html: { rows: 5, class: 'span12', required: false } %>
+      </div>
     </div>
   </div>
 

@@ -1,21 +1,23 @@
 class Printer < ActiveRecord::Base
 
   def self.generate_cardboard(analysis)
+    owner = APP_CONFIG['owner']
+
     Prawn::Document.generate(analysis.file_path(:cardboard), margin: 22) do |pdf|
       date = analysis.generated_at
 
       blanquito =  [ { content: nil, colspan: 6, borders: [:right, :left] } ]
 
       tabla = [
-        # MBM + Acta
+        # Title + Acta
         duplicate_gilada([
-          { content: "<b>M.B.M.<b>", align: :center, colspan: 3, size: 14, borders: [:left, :top] },
+          { content: "<b>#{owner['title']}<b>", align: :center, colspan: 3, size: 14, borders: [:left, :top] },
           { content: 'ACTA Nº', align: :left, colspan: 3, borders: [:right, :top] }
         ]),
 
-        # Representantes
+        #subtitle
         duplicate_gilada([
-          { content: "Representantes de Bodegas \n Rioja 360 - Ciudad", align: :center, colspan: 3,
+          { content: "#{owner['subtitle']} \n #{owner['address']}", align: :center, colspan: 3,
             size: 7, borders: [:left] },
           { content: nil, colspan: 3, borders: [:right] }
         ]),
@@ -122,6 +124,8 @@ class Printer < ActiveRecord::Base
   end
 
   def self.generate_form(analysis)
+    owner = APP_CONFIG['owner']
+
     Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4', margin: 22) do |pdf|
       #height = 25
       full_destinies = analysis.destinies
@@ -145,7 +149,7 @@ class Printer < ActiveRecord::Base
         [
           { content: '<u>SOLICITUD PARA ANALISIS DE APTITUD DE EXPORTACIÓN</u>',
             align: :center, colspan: 7, size: 17, borders: [] },
-          { content: "<b>M.B.M.<b>", align: :center, colspan: 4, size: 14, borders: [] }
+          { content: "<b>#{owner['title']}<b>", align: :center, colspan: 4, size: 14, borders: [] }
         ],
         blanquito,
         [

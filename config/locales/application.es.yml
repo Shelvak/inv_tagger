@@ -1,5 +1,5 @@
 es:
-  app_name: 'InvTagger'
+  app_name: 'Muestras'
 
   attributes:
     created_at: 'Creación'

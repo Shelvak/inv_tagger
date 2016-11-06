@@ -10,3 +10,8 @@ smtp:
 public_host: 'public.domain.com'
 
 inv_db_ip: '192.168.0.15'
+
+owner:
+  title: 'Company'
+  subtitle: 'Company Subtitle'
+  address: 'Some street 123 - City'

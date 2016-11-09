@@ -34,6 +34,7 @@ GEM
     atomic (1.1.14)
     awesome_print (1.2.0)
     bcrypt-ruby (3.1.2)
+    bugsnag (4.2.1)
     builder (3.1.4)
     cancan (1.6.10)
     capistrano (3.0.1)
@@ -218,6 +219,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-be_readonly
   awesome_print
+  bugsnag
   cancan
   capistrano
   capistrano-bundler
@@ -248,3 +250,6 @@ DEPENDENCIES
   uglifier
   validates_timeliness
   will_paginate
+
+BUNDLED WITH
+   1.13.2

@@ -37,6 +37,8 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
 
+gem 'bugsnag'
+
 group :development do
   gem 'thin'
   gem 'awesome_print'

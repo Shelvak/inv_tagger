@@ -4,43 +4,48 @@ class Printer < ActiveRecord::Base
     owner = APP_CONFIG['owner']
 
     Prawn::Document.generate(analysis.file_path(:cardboard), margin: 22) do |pdf|
+      pdf.font_families.update(
+        'ComicSans' => {
+          bold: Rails.root.join('private/comicsansbd.ttf').to_s,
+          italic: Rails.root.join('private/comicsansi.ttf').to_s,
+          normal: Rails.root.join('private/comicsans.ttf').to_s
+        }
+      )
+      pdf.font 'ComicSans'
       date = analysis.generated_at
 
-      blanquito =  [ { content: nil, colspan: 6, borders: [:right, :left] } ]
+      blanquito = [ { content: nil, colspan: 6, borders: [:right, :left] } ]
 
       tabla = [
-        # Title + Acta
         duplicate_gilada([
-          { content: "<b>#{owner['title']}<b>", align: :center, colspan: 3, size: 14, borders: [:left, :top] },
-          { content: 'ACTA Nº', align: :left, colspan: 3, borders: [:right, :top] }
+          { content: nil, colspan: 6, borders: [:left, :top, :right] },
         ]),
 
-        #subtitle
+        # Title + Acta
         duplicate_gilada([
-          { content: "#{owner['subtitle']} \n #{owner['address']}", align: :center, colspan: 3,
-            size: 7, borders: [:left] },
-          { content: nil, colspan: 3, borders: [:right] }
+          { content: nil, align: :center, colspan: 3, size: 14, borders: [:left] },
+          { content: 'ACTA Nº', align: :left, colspan: 3, borders: [:right] }
         ]),
 
         # Blanco
         duplicate_gilada(blanquito),
+        duplicate_gilada(blanquito),
+        duplicate_gilada(blanquito),
 
         # Inst Nac.  + Dia/Mes/Año
         duplicate_gilada([
-          { content: 'INSTITUTO NACIONAL', align: :left, colspan: 3, size: 10,
-            borders: [:left] },
-          { content: 'Día', align: :center, size: 10 },
-          { content: 'Mes', align: :center, size: 10 },
-          { content: 'Año', align: :center, size: 10 }
+          { content: 'INSTITUTO NACIONAL', align: :left, colspan: 3, size: 10, borders: [:left] },
+          { content: 'Día', align: :center, size: 10, borders: [] },
+          { content: 'Mes', align: :center, size: 10, borders: [] },
+          { content: 'Año', align: :center, size: 10, borders: [:right] }
         ]),
 
         # vitivinicultura + fecha
         duplicate_gilada([
-          { content: 'DE VITIVINICULTURA', align: :left, colspan: 3, size: 10,
-            borders: [:left] },
-          { content: "#{date.day}", align: :center, size: 10 },
-          { content: "#{date.month}", align: :center, size: 10 },
-          { content: "#{date.year}", align: :center, size: 10 }
+          { content: 'DE VITIVINICULTURA', align: :left, colspan: 3, size: 10, borders: [:left] },
+          { content: "#{date.day}", align: :center, size: 10, borders: [] },
+          { content: "#{date.month}", align: :center, size: 10, borders: [] },
+          { content: "#{date.year}", align: :center, size: 10, borders: [:right] }
         ]),
 
         # Blanco
@@ -49,55 +54,60 @@ class Printer < ActiveRecord::Base
         # Muestra de:
         duplicate_gilada([
           { content: 'Muestra para obtener análisis de: ', align: :left,
-            colspan: 6, borders: [:left, :bottom, :right] }
+            colspan: 6, borders: [:left, :right], size: 10 }
         ]),
 
         # Tipo de
         duplicate_gilada([
           { content: 'APTITUD DE EXPORTACIÓN', align: :center, colspan: 6,
-            borders: [:left, :bottom, :right] }
+            borders: [:left, :right], font_style: :italic }
         ]),
 
         # Titulo de razón
         duplicate_gilada([
           { content: 'Firma o Razón Social: ', align: :left, colspan: 6,
-            borders: [:left, :bottom, :right], size: 10 }
+            borders: [:left, :right], size: 10 }
         ]),
 
         # Razon del solicitante
         duplicate_gilada([
-          { content: "<b>#{analysis.enrolle.name}</b>", align: :center, colspan: 6, borders: [:left, :bottom, :right], size: 10 }
+          { content: "<b>#{analysis.enrolle.name}</b>", align: :center, colspan: 6, borders: [:left, :right], size: 10 }
         ]),
 
         # Inscripcion + código solicitante
         duplicate_gilada([
-          { content: 'Inscripción I.N.V.:', align: :left, colspan: 2, borders: [:left, :bottom], size: 10 },
-          { content: analysis.enrolle_code.to_s, align: :left, colspan: 4, borders: [:bottom, :right], size: 10 }
+          { content: 'Inscripción I.N.V.:', align: :left, colspan: 2, borders: [:left], size: 10 },
+          { content: analysis.enrolle_code.to_s, align: :left, colspan: 4, borders: [:right], size: 10, font_style: :bold }
         ]),
 
         # Producto
         duplicate_gilada([
-          { content: 'Producto :', align: :left, borders: [:left, :bottom], size: 10 },
-          { content: analysis.product.name, align: :left, colspan: 5, borders: [:bottom, :right], size: 10 }
+          { content: 'Producto :', align: :left, borders: [:left], size: 10 },
+          { content: analysis.product.name, align: :left, colspan: 5, borders: [:right], size: 10, font_style: :bold }
         ]),
 
         # Variedad + Año
         duplicate_gilada([
-          { content: analysis.try(:variety_short_names).try(:join, ' - '), align: :center, colspan: 5, borders: [:left, :bottom], size: 10 },
-          { content: (analysis.try(:harvest) ? number_with_delimiter(analysis.harvest).to_s : '--'), align: :left, colspan: 1, borders: [:bottom, :right], size: 10 }
+          { content: analysis.try(:variety_short_names).try(:join, ' - '), align: :center, colspan: 6, borders: [:left, :right], size: 10, font_style: :bold }
+        ]),
+
+        duplicate_gilada([
+          { content: 'Cosecha :', align: :left, borders: [:left], size: 10 },
+          { content: (analysis.try(:harvest) ? number_with_delimiter(analysis.harvest).to_s : '--'),
+            colspan: 5, align: :left, borders: [:right], size: 10, font_style: :bold }
+
         ]),
 
         # Cantidad litros
         duplicate_gilada([
-          { content: 'Cantidad :' , borders: [:left, :bottom], size: 10 },
-          { content: "<b>#{number_with_delimiter(analysis.quantity)}</b>", align: :right, borders: [:bottom], size: 10, colspan: 2 },
-          { content: 'LTS.', align: :left, colspan: 3, borders: [:bottom, :right], size: 10 }
+          { content: 'Cantidad :' , borders: [:left], size: 10, colspan: 2, borders: [:left]},
+          { content: "<b>#{number_with_delimiter(analysis.quantity)}LTS.</b>", align: :left, size: 10, colspan: 4, borders: [:right] },
         ]),
 
         # Observaciones
         duplicate_gilada([
           { content: 'Observaciones: ', align: :left, colspan: 6,
-            borders: [:left, :bottom, :right], size: 10 }
+            borders: [:left, :right], size: 10 }
         ]),
 
         # triple espacio
@@ -107,14 +117,23 @@ class Printer < ActiveRecord::Base
 
         # Firma
         duplicate_gilada([
-          { content: 'Firma Poseedor o Responsable', align: :center, colspan: 6, size: 8, border_width: 2 }
-        ])
+          { content: 'Firma Poseedor o Responsable', align: :left, colspan: 6, size: 6, borders: [:right, :left] }
+        ]),
+
+        duplicate_gilada([
+          { content: nil, colspan: 6, borders: [:left, :bottom, :right] },
+        ]),
       ]
+
+      pdf.image 'public/baco.jpg', at: [30,390], width: 90
+      pdf.image 'public/baco.jpg', at: [30,750], width: 90
+      pdf.image 'public/baco.jpg', at: [300,390], width: 90
+      pdf.image 'public/baco.jpg', at: [300,750], width: 90
 
       tabla_con_opciones = [
         tabla,
         column_widths: [62, 42, 41, 29, 29, 29, 8, 62, 42, 41, 29, 29],
-        cell_style: { inline_format: true, padding: [0, 0, 0, 4], border_width: 0.2, height: 15 }
+        cell_style: { inline_format: true, padding: [0, 0, 0, 4], border_width: 2.2, height: 15 }
       ]
 
       pdf.table *tabla_con_opciones
@@ -124,9 +143,17 @@ class Printer < ActiveRecord::Base
   end
 
   def self.generate_form(analysis)
-    owner = APP_CONFIG['owner']
 
     Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4', margin: 22) do |pdf|
+      pdf.font_families.update(
+        'ComicSans' => {
+          bold: Rails.root.join('private/comicsansbd.ttf').to_s,
+          italic: Rails.root.join('private/comicsansi.ttf').to_s,
+          normal: Rails.root.join('private/comicsans.ttf').to_s
+        }
+      )
+      pdf.font 'ComicSans'
+
       #height = 25
       full_destinies = analysis.destinies
       destinies = full_destinies.map(&:form_code).map(&:to_s)
@@ -144,88 +171,92 @@ class Printer < ActiveRecord::Base
 
       blanquito = [ { content: nil, colspan: 7, borders: [], height: 5 } ]
 
+      pdf.image 'public/baco.jpg', at: [620, 570], width: 120
+
       tabla = [
         # Solicitud + MBM
         [
           { content: '<u>SOLICITUD PARA ANALISIS DE APTITUD DE EXPORTACIÓN</u>',
-            align: :center, colspan: 7, size: 17, borders: [] },
-          { content: "<b>#{owner['title']}<b>", align: :center, colspan: 4, size: 14, borders: [] }
+            align: :center, colspan: 7, size: 12, borders: [], font_style: :italic }
+        ],
+        blanquito,
+        blanquito,
+        [
+          { content: '<u>INSTITUTO NACIONAL DE VITIVINICULTURA</u>', align: :left,  borders: [], size: 6, height: 12 }
+        ],
+        blanquito,
+        blanquito,
+        blanquito,
+        [
+          { content: 'RAZÓN SOCIAL:', align: :left,  borders: [], size: 9, font_style: :italic, height: 15 },
+          { content: analysis.try(:enrolle).try(:name).upcase, align: :center, colspan: 4, borders: [], size: 12, height: 15 },
+          { content: nil, borders: [] },
+          { content: 'FECHA:', align: :left, borders: [], size: 9, font_style: :italic },
+          { content: I18n.l(analysis.generated_at.to_date), align: :left, colspan: 4, borders: [], size: 12 }
         ],
         blanquito,
         [
-          { content: '<u>INSTITUTO NACIONAL</u>', align: :left,  borders: [], size: 10, height: 12 }
-        ],
-        [
-          { content: '<u>DE VITIVINICULTURA</u>', align: :left, borders: [], size: 10, height: 12 }
-        ],
-        blanquito,
-        [
-          { content: 'RAZÓN SOCIAL:', align: :left,  borders: [], size: 11, height: 15 },
-          { content: analysis.try(:enrolle).try(:name).upcase, align: :center, colspan: 4, borders: [:bottom], size: 12, height: 15 },
+          { content: 'Nº DE EXPORTADOR:', align: :left,  borders: [], size: 9, font_style: :italic, height: 15 },
+          { content: analysis.try(:enrolle_code).try(:to_s), align: :center, colspan: 4, borders: [], size: 12, height: 15 },
           { content: nil, borders: [] },
-          { content: 'FECHA:', align: :left, borders: [], size: 10 },
-          { content: I18n.l(analysis.generated_at.to_date), align: :center, colspan: 4, borders: [:bottom], size: 12 }
+          { content: 'MUESTRA Nº:', align: :left, borders: [], size: 10, font_style: :bold },
+          { content: nil, colspan: 3, borders: [] }
         ],
         blanquito,
         [
-          { content: 'Nº DE EXPORTADOR:', align: :left,  borders: [], size: 11, height: 15 },
-          { content: analysis.try(:enrolle_code).try(:to_s), align: :center, colspan: 4, borders: [:bottom], size: 12, height: 15 },
+          { content: 'Nº BGA/FCA. DEPOSITARIA:', align: :left,  borders: [], size: 9, font_style: :italic, height: 19 },
+          { content: analysis.depositary_enrolle_code, align: :center, colspan: 4, borders: [], size: 12, height: 15 },
           { content: nil, borders: [] },
-          { content: 'MUESTRA Nº:', align: :left, borders: [], size: 10 },
-          { content: nil, colspan: 4, borders: [:bottom] }
-        ],
-        blanquito,
-        [
-          { content: 'Nº BGA/FCA. DEPOSITARIA:', align: :left,  borders: [], size: 11, height: 15 },
-          { content: analysis.depositary_enrolle_code, align: :center, colspan: 4, borders: [:bottom], size: 12, height: 15 },
-          { content: nil, borders: [] },
-          { content: '<b>COMÚN:</b>', align: :left, borders: [], size: 8 },
-          { content: nil, borders: [] },
-          { content: (analysis.common? ? 'X' : nil), align: :center, border_width: 3 },
-          { content: nil, borders: [] }
+          {
+            content: 'COMÚN:' + (analysis.common? ? '    XXX' : ''),
+            font_style: analysis.common? ? :bold : nil,
+            colspan: analysis.common? ? 3 : 1,
+            align: :left, borders: [], size: 9
+          },
+          {
+            content: 'PREFERENCIAL:' + (analysis.preferential? ? '  XXX' : ''),
+            font_style: analysis.preferential? ? :bold : nil,
+            colspan: analysis.preferential? ? 3 : 2,
+            align: :left, borders: [], size: 9
+          },
         ],
         [
           { content: 'DOMICILIO DEPOSITARIO:', align: :left,  colspan: 4, borders: [], size: 8, height: 15 },
           { content: nil, colspan: 2, borders: [] },
-          { content: '<b>PREFERENCIAL:</b>', align: :left, borders: [], size: 8 },
-          { content: nil, borders: [] },
-          { content: (analysis.preferential? ? 'X' : nil), align: :center, border_width: 3 },
-          { content: nil, borders: [] }
-        ],
-        [
-          { content: nil, colspan: 4, borders: [], height: 15 },
-          { content: nil, colspan: 2, borders: [] },
-          { content: '<b>DECLARACIÓN JURADA:</b>', align: :left, borders: [], size: 8 },
-          { content: nil, borders: [] },
-          { content: (analysis.affidavit? ? 'X' : nil), align: :center, border_width: 3 },
-          { content: nil, borders: [] }
+          {
+            content: 'DECLARACIÓN JURADA:' + (analysis.affidavit? ? '    XXX' : ''),
+            align: :left, borders: [], size: 9, colspan: 3,
+            font_style: analysis.affidavit? ? :bold : nil
+          },
+          { content: nil, colspan: 1, borders: [] }
         ],
         blanquito,
         blanquito,
+        blanquito,
         [
-          { content: "TIPO DE\nPRODUCTO/MUESTRA\nVINO BLANCO (Io)", align: :center, size: 8 },
-          { content: 'CÓDIGO', align: :center, size: 10 },
-          { content: 'COSECHA', align: :center, size: 10 },
-          { content: 'LITROS', align: :center, size: 10 },
-          { content: 'VARIEDAD', align: :center, size: 10 },
-          { content: 'CÓDIGO', align: :center, size: 10 },
-          { content: "CÓDIGO DEL\nOBJETIVO\nDEL ANÁLISIS", align: :center, size: 8 },
-          { content: "CÓDIGO PAÍS\nDESTINO", align: :center, size: 8 },
-          { content: "DETERMINA.\nANALÍTICAS\nESPECIALES", align: :center, size: 7.5 },
-          { content: "DICT.\nCOMIS.\NDEGUST.", align: :center, size: 7.5 },
-          { content: "CANTIDAD\nDE COPIAS", align: :center, size: 8 }
+          { content: "TIPO DE\nPRODUCTO/MUESTRA\nMANIFESTADA", align: :center, size: 8, background_color: 'B8B8B8' },
+          { content: "\nCÓDIGO", align: :center, size: 10, background_color: 'B8B8B8' },
+          { content: "\nCOSECHA", align: :center, size: 10, background_color: 'B8B8B8' },
+          { content: "\nLITROS", align: :center, size: 10, background_color: 'B8B8B8' },
+          { content: "\nVARIEDAD", align: :center, size: 10, background_color: 'B8B8B8' },
+          { content: "\nCÓDIGO", align: :center, size: 10, background_color: 'B8B8B8' },
+          { content: "CÓDIGO DEL\nOBJETIVO\nDEL ANÁLISIS", align: :center, size: 8, background_color: 'B8B8B8' },
+          { content: "CÓDIGO PAÍS\nDESTINO", align: :center, size: 8, background_color: 'B8B8B8' },
+          { content: "DETERMINA.\nANALÍTICAS\nESPECIALES", align: :center, size: 7.5, background_color: 'B8B8B8' },
+          { content: "DICT.\nCOMIS.\NDEGUST.", align: :center, size: 7.5, background_color: 'B8B8B8' },
+          { content: "CANTIDAD\nDE COPIAS\nOFICIALES", align: :center, size: 6, background_color: 'B8B8B8' }
         ],
         [
-          { content: [analysis.try(:product).try(:name), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom] },
-          { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom] },
-          { content: (analysis.try(:harvest) ? number_with_delimiter(analysis.harvest).to_s : '--'), align: :center, size: 11, borders: [:bottom] },
-          { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom] },
-          { content: analysis.try(:variety_names).try(:join, "\n"), align: :center, size: 11, borders: [:bottom] },
-          { content: analysis.try(:variety_codes).try(:join, "\n"), align: :center, size: 11, borders: [:bottom] },
-          { content: "3053", align: :center, size: 12, borders: [:bottom] },
-          { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom] },
-          { content: (analysis.special_analysis ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom] },
-          { content: (analysis.tasting ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom] },
+          { content: [analysis.try(:product).try(:name), ' (O)'].join, align: :center, size: 12, height: 130, borders: [:left, :bottom, :right] },
+          { content: analysis.try(:product_code).try(:to_s), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: (analysis.try(:harvest) ? number_with_delimiter(analysis.harvest).to_s : '--'), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: number_with_delimiter(analysis.try(:quantity)).try(:to_s), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: analysis.try(:variety_names).try(:join, "\n"), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: analysis.try(:variety_codes).try(:join, "\n"), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: "3053", align: :center, size: 12, borders: [:bottom, :right] },
+          { content: destinies.join("\n"), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: (analysis.special_analysis ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom, :right] },
+          { content: (analysis.tasting ? 'SI' : ' '), align: :center, size: 11, borders: [:bottom, :right] },
           { content: analysis.copies.to_s, align: :center, size: 11, borders: [:right, :bottom] }
         ],
         blanquito,
@@ -236,19 +267,20 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 2, borders: [:top, :right] }
         ],
         [
-          { content: "<color rgb='FFFFFF'>.</color>              <u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
+          { content: "<u>OBSERVACIONES:</u>", colspan: 1, align: :left, size: 12, height: 55, borders: [:left] },
           { content: chomp_multi_whitespaces(analysis.try(:observations).to_s).gsub("\n ", "\n<color rgb='FFFFFF'>.</color>"),
             colspan: 8, size: observation_size, height: 75, borders: [] },
           { content: nil, colspan: 2, borders: [:right] }
         ],
         [
-          { content: "DESTINO:             #{full_destinies_name}", colspan: 7, size: 9, height: 12, borders: [:left] },
-          { content: '  ', colspan: 2, borders: [] },
-          { content: nil, colspan: 2, borders: [:right] }
+          { content: "DESTINO:             #{full_destinies_name}", colspan: 7, size: 9, height: 12, borders: [:left, :bottom] },
+          { content: '  ', colspan: 2, borders: [:bottom] },
+          { content: nil, colspan: 2, borders: [:bottom, :right] }
         ],
+        blanquito,
         [
-          { content: "EN CASO DE PRESENTAR MUESTRAS SE DEJA EXPRESA CONSTANCIA DE SU EXCLUSIVA RESPONSABILIDAD, SIN NINGÚN DERECHO A RECLAMO\nPOR LAS DEFERENCIAS DE COMPOSICIÓN QUE PUDIERAN EXISTIR ENTRE LAS MISMAS, LA PRESENTE REVISTE CARÁCTER DE DECLARACIÓN JURADA.", colspan: 7, size: 6, borders: [:left, :bottom] },
-          { content: '', colspan: 4, size: 6, borders: [:right, :bottom], height: 20 }
+          { content: "EN CASO DE PRESENTAR MUESTRAS SE DEJA EXPRESA CONSTANCIA DE SU EXCLUSIVA RESPONSABILIDAD, SIN NINGÚN DERECHO A RECLAMO\nPOR LAS DEFERENCIAS DE COMPOSICIÓN QUE PUDIERAN EXISTIR ENTRE LAS MISMAS, LA PRESENTE REVISTE CARÁCTER DE DECLARACIÓN JURADA.", colspan: 7, size: 6, borders: [] },
+          { content: '', colspan: 4, size: 6, borders: [], height: 20 }
         ], blanquito, blanquito,
         [
           { content: nil, colspan: 3, height: 80, borders: [] },
@@ -256,24 +288,19 @@ class Printer < ActiveRecord::Base
           { content: nil, colspan: 4, height: 80, borders: [] }
         ],
         [
-          { content: 'FIRMA SOLICITANTE Y ACLARACIÓN', align: :center, colspan: 3, size: 8, height: 20, borders: [:top] },
+          { content: 'FIRMA SOLICITANTE Y ACLARACIÓN', align: :center, colspan: 3, size: 7, height: 20, borders: [:top] },
           { content: 'SELLO RECEPCIÓN I.N.V.', align: :center, colspan: 4, borders: [:left, :bottom, :right] },
-          { content: 'FIRMA Y SELLO EMPREADO I.N.V.', align: :center, colspan: 4, size: 8, borders: [:top] }
+          { content: 'FIRMA Y SELLO EMPREADO I.N.V.', align: :center, colspan: 4, size: 7, borders: [:top] }
         ]
       ]
 
       tabla_con_opciones = [
         tabla,
         column_widths: [150,10,30,65,70,30,100,45,52,40],
-        cell_style: { inline_format: true, padding: [0, 1, 0, 1] }
+        cell_style: { inline_format: true, padding: [0, 1, 0, 1], border_width: 2.2}
       ]
 
       pdf.table *tabla_con_opciones
-
-      # Do the fuck1ng MBM circle
-      pdf.stroke do
-        pdf.rounded_rectangle [658, 559], 65, 35, 18
-      end
     end
   end
 

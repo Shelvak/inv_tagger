@@ -5,13 +5,13 @@ class Printer < ActiveRecord::Base
 
     Prawn::Document.generate(analysis.file_path(:cardboard), margin: 22) do |pdf|
       pdf.font_families.update(
-        'ComicSans' => {
-          bold: Rails.root.join('private/comicsansbd.ttf').to_s,
-          italic: Rails.root.join('private/comicsansi.ttf').to_s,
-          normal: Rails.root.join('private/comicsans.ttf').to_s
+        'Times' => {
+          bold: Rails.root.join('private/Times_New_Roman_Bold_Italic.ttf').to_s,
+          italic: Rails.root.join('private/Times_New_Roman_Italic.ttf').to_s,
+          normal: Rails.root.join('private/Times_New_Roman_Italic.ttf').to_s
         }
       )
-      pdf.font 'ComicSans'
+      pdf.font 'Times'
       date = analysis.generated_at
 
       blanquito = [ { content: nil, colspan: 6, borders: [:right, :left] } ]
@@ -146,13 +146,13 @@ class Printer < ActiveRecord::Base
 
     Prawn::Document.generate(analysis.file_path(:form), page_layout: :landscape, page_size: 'A4', margin: 22) do |pdf|
       pdf.font_families.update(
-        'ComicSans' => {
-          bold: Rails.root.join('private/comicsansbd.ttf').to_s,
-          italic: Rails.root.join('private/comicsansi.ttf').to_s,
-          normal: Rails.root.join('private/comicsans.ttf').to_s
+        'Times' => {
+          bold: Rails.root.join('private/Times_New_Roman_Bold_Italic.ttf').to_s,
+          italic: Rails.root.join('private/Times_New_Roman_Italic.ttf').to_s,
+          normal: Rails.root.join('private/Times_New_Roman_Italic.ttf').to_s
         }
       )
-      pdf.font 'ComicSans'
+      pdf.font 'Times'
 
       #height = 25
       full_destinies = analysis.destinies
